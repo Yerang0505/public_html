@@ -408,13 +408,320 @@ footer {
     transform: translateY(0);
 }
 
+/* --- Sub Hero Section (For sub-pages) --- */
+.sub-hero {
+    height: 40vh;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    background: var(--primary-dark);
+    color: white;
+    overflow: hidden;
+    padding-top: 80px; /* Accounts for fixed navbar */
+}
+
+.sub-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 4, 40, 0.9) 0%, rgba(0, 78, 146, 0.7) 100%);
+    z-index: 1;
+}
+
+.sub-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+}
+
+.sub-hero h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    text-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.sub-hero p {
+    font-size: 1.2rem;
+    font-weight: 300;
+    opacity: 0.9;
+}
+
+/* --- Equipment Layout --- */
+.equipment-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 1.8fr;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+/* --- Book Mockup (3D tactile look) --- */
+.book-container {
+    perspective: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.book-mockup {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    aspect-ratio: 1 / 1.414; /* Standard A4 ratio */
+    border-radius: 4px 15px 15px 4px;
+    box-shadow: 
+        5px 5px 20px rgba(0, 0, 0, 0.2),
+        15px 15px 40px rgba(0, 0, 0, 0.15),
+        -2px 0px 5px rgba(255, 255, 255, 0.2) inset;
+    background: #fff;
+    transform: rotateY(-10deg) rotateX(5deg);
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.6s ease;
+    overflow: hidden;
+}
+
+.book-mockup::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 15px;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.0) 100%);
+    z-index: 5;
+}
+
+.book-mockup::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 15px;
+    width: 1px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    z-index: 5;
+}
+
+.book-mockup:hover {
+    transform: rotateY(-2deg) rotateX(2deg) translateY(-8px);
+    box-shadow: 
+        10px 15px 35px rgba(0, 4, 40, 0.3),
+        25px 30px 60px rgba(0, 0, 0, 0.2);
+}
+
+.book-mockup img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* --- Download Action Block --- */
+.download-action-area {
+    margin-top: 30px;
+    text-align: center;
+    width: 100%;
+    max-width: 380px;
+}
+
+.btn-download {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    padding: 1.2rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 50px;
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
+    color: white;
+    text-decoration: none;
+    box-shadow: 0 10px 25px rgba(0, 210, 255, 0.25);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-download::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.btn-download:hover::before {
+    left: 100%;
+}
+
+.btn-download:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 210, 255, 0.4);
+}
+
+.btn-download i {
+    font-size: 1.3rem;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+}
+
+.file-spec {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.file-spec span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* --- Info Details --- */
+.manual-details {
+    padding-left: 20px;
+}
+
+.manual-details h2 {
+    font-size: 2.5rem;
+    color: var(--primary-dark);
+    margin-bottom: 20px;
+    line-height: 1.3;
+}
+
+.manual-details .intro-text {
+    font-size: 1.15rem;
+    color: var(--text-main);
+    margin-bottom: 30px;
+    line-height: 1.8;
+}
+
+.manual-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.meta-card {
+    background: white;
+    padding: 20px 25px;
+    border-radius: 20px;
+    border: 1px solid #f1f5f9;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+.meta-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+}
+
+.meta-card h4 {
+    font-size: 1rem;
+    color: var(--primary);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.meta-card p {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--text-main);
+}
+
+/* --- Quick Preview Outline --- */
+.preview-outline {
+    background: white;
+    border-radius: 24px;
+    border: 1px solid #f1f5f9;
+    box-shadow: var(--shadow-sm);
+    padding: 35px;
+}
+
+.preview-outline h3 {
+    font-size: 1.4rem;
+    color: var(--primary-dark);
+    margin-bottom: 20px;
+    border-left: 4px solid var(--secondary);
+    padding-left: 12px;
+}
+
+.outline-list {
+    list-style: none;
+}
+
+.outline-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 1rem;
+}
+
+.outline-list li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.outline-list li i {
+    color: var(--secondary);
+    margin-top: 4px;
+}
+
+.outline-list li span {
+    font-weight: 600;
+    color: var(--primary);
+    min-width: 70px;
+    display: inline-block;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .footer-grid { grid-template-columns: 1fr 1fr; }
 }
 
+@media (max-width: 992px) {
+    .equipment-layout {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+    .book-container {
+        margin: 0 auto;
+    }
+    .manual-details {
+        padding-left: 0;
+    }
+}
+
 @media (max-width: 768px) {
     .hero h1 { font-size: 2.5rem; }
+    .sub-hero h1 { font-size: 2.2rem; }
     .nav-links { display: none; }
     .footer-grid { grid-template-columns: 1fr; }
 }
+

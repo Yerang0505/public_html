@@ -2,8 +2,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.getElementById('navbar');
     const revealElements = document.querySelectorAll('.reveal');
 
-    // Navigation Background Change on Scroll
+    // Navigation Background Change on Scroll (Only for pages with a Hero section)
+    const isHomepage = document.querySelector('.hero') !== null;
+    
+    // Set initial state for sub-pages
+    if (!isHomepage) {
+        navbar.classList.add('scrolled');
+    }
+
     window.addEventListener('scroll', () => {
+        if (!isHomepage) return; // Keep scrolled class on subpages
+        
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
         } else {
