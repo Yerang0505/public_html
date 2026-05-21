@@ -756,6 +756,90 @@ footer {
     line-height: 1.6;
 }
 
+/* --- Floating Music Button & Waves --- */
+.music-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 56px;
+    height: 56px;
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 9999;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.music-btn:hover {
+    transform: scale(1.1) translateY(-3px);
+    background: rgba(15, 23, 42, 0.9);
+    border-color: var(--secondary);
+    box-shadow: 0 15px 35px rgba(0, 210, 255, 0.4);
+}
+
+.music-icon {
+    color: white;
+    font-size: 1.15rem;
+    transition: all 0.3s ease;
+}
+
+.music-waves {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 3px;
+    height: 18px;
+    position: absolute;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.music-waves .stroke {
+    background: var(--secondary);
+    height: 100%;
+    width: 3px;
+    border-radius: 50px;
+    animation: wave-anim 1.2s ease-in-out infinite;
+}
+
+.music-waves .stroke:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.music-waves .stroke:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.music-waves .stroke:nth-child(4) {
+    animation-delay: 0.1s;
+}
+
+/* Active State: Playing Music */
+.music-btn.playing .music-icon {
+    opacity: 0;
+    transform: scale(0.5);
+}
+
+.music-btn.playing .music-waves {
+    opacity: 1;
+}
+
+@keyframes wave-anim {
+    0%, 100% {
+        height: 4px;
+    }
+    50% {
+        height: 18px;
+    }
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .footer-grid { grid-template-columns: 1fr 1fr; }
@@ -782,6 +866,19 @@ footer {
     .sub-hero h1 { font-size: 2.2rem; }
     .nav-links { display: none; }
     .footer-grid { grid-template-columns: 1fr; }
+    .music-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 48px;
+        height: 48px;
+    }
+    .music-waves {
+        height: 14px;
+    }
+    @keyframes wave-anim {
+        0%, 100% { height: 3px; }
+        50% { height: 14px; }
+    }
 }
 
 

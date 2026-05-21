@@ -52,4 +52,51 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // --- Background Music Autoplay & Toggle Handler (Home screen only) ---
+    const audio = document.getElementById('bg-audio');
+    const musicBtn = document.getElementById('music-toggle');
+
+    if (audio && musicBtn) {
+        let isPlaying = false;
+
+        const playAudio = () => {
+            audio.play().then(() => {
+                isPlaying = true;
+                musicBtn.classList.add('playing');
+            }).catch(err => {
+                console.log("Autoplay blocked, waiting for user interaction.", err);
+            });
+        };
+
+        // Try playing on load
+        playAudio();
+
+        // Autoplay fallback: play on first user interaction anywhere
+        const startOnInteraction = () => {
+            if (!isPlaying) {
+                playAudio();
+                // Remove listeners once played
+                document.removeEventListener('click', startOnInteraction);
+                document.removeEventListener('keydown', startOnInteraction);
+            }
+        };
+
+        document.addEventListener('click', startOnInteraction);
+        document.addEventListener('keydown', startOnInteraction);
+
+        // Click handler to toggle play/pause
+        musicBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent trigger startOnInteraction immediately
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                musicBtn.classList.remove('playing');
+            } else {
+                audio.play();
+                isPlaying = true;
+                musicBtn.classList.add('playing');
+            }
+        });
+    }
 });
