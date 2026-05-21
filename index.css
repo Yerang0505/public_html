@@ -1469,6 +1469,185 @@ footer {
     }
 }
 
+/* --- 2026 Campaign Card News Slider Styles --- */
+.card-news-viewport {
+    position: relative;
+    max-width: 750px;
+    margin: 40px auto 0;
+    background: transparent;
+    padding: 10px;
+    z-index: 20;
+}
+
+.card-news-slider {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Standard square card news ratio */
+    background: white;
+    border-radius: 28px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+    z-index: 1;
+}
+
+.card-news-slider:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px rgba(0, 78, 146, 0.15);
+    border-color: rgba(0, 210, 255, 0.35);
+}
+
+.card-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(100%);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease, visibility 0.6s ease;
+    z-index: 5;
+    background: white;
+}
+
+.card-slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    z-index: 10;
+}
+
+.card-slide.prev-slide {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-100%);
+    z-index: 5;
+}
+
+.card-slide canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Flawlessly scales to fit the container */
+    display: block;
+    pointer-events: none; /* Allows slider click to bubble up */
+}
+
+/* Spinner and loading animation */
+.slider-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    height: 100%;
+    color: var(--text-muted);
+}
+
+.spinner {
+    width: 55px;
+    height: 55px;
+    border: 5px solid rgba(0, 78, 146, 0.08);
+    border-top-color: var(--secondary);
+    border-radius: 50%;
+    animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Navigation buttons */
+.slider-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 58px;
+    height: 58px;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 30;
+    font-size: 1.25rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slider-nav:hover {
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
+    border-color: transparent;
+    transform: translateY(-50%) scale(1.12);
+    box-shadow: 0 12px 25px rgba(0, 210, 255, 0.4);
+}
+
+.slider-nav.prev {
+    left: -80px;
+}
+
+.slider-nav.next {
+    right: -80px;
+}
+
+/* Pagination Badge */
+.slider-pagination {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 30;
+    pointer-events: none; /* Clicks go through to slider */
+}
+
+.page-badge {
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 0.98rem;
+    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+}
+
+/* Responsive configurations */
+@media (max-width: 992px) {
+    .card-news-viewport {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+    .slider-nav {
+        width: 48px;
+        height: 48px;
+        font-size: 1.1rem;
+    }
+    .slider-nav.prev {
+        left: 30px;
+    }
+    .slider-nav.next {
+        right: 30px;
+    }
+}
+
+
 
 
 

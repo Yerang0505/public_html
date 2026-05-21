@@ -131,4 +131,185 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // --- 2026 Campaign PDF Card News Slider ---
+    const pdfSlider = document.getElementById('pdf-slider');
+    const sliderPrevBtn = document.getElementById('slider-prev');
+    const sliderNextBtn = document.getElementById('slider-next');
+    const pageIndicator = document.getElementById('page-indicator');
+    const sliderLoading = document.getElementById('slider-loading');
+
+    if (pdfSlider) {
+        let pdfDoc = null;
+        let currentSlideIndex = 0;
+        let slides = [];
+        let isTransitioning = false;
+
+        const pdfUrl = '카드뉴스.pdf';
+
+        // Initialize PDF.js loading
+        pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+            pdfDoc = pdf;
+            const numPages = pdf.numPages;
+
+            // Render all pages sequentially to preserve ordering and avoid canvas overlap
+            let renderPromise = Promise.resolve();
+            for (let i = 1; i <= numPages; i++) {
+                const pageNum = i;
+                renderPromise = renderPromise.then(() => renderPage(pageNum));
+            }
+
+            renderPromise.then(() => {
+                // Hide the loader once everything is rendered
+                if (sliderLoading) {
+                    sliderLoading.style.display = 'none';
+                }
+
+                // Gather all slides and set up the active initial state
+                slides = Array.from(pdfSlider.querySelectorAll('.card-slide'));
+                if (slides.length > 0) {
+                    slides[0].classList.add('active');
+                    updatePageIndicator(1, numPages);
+                }
+
+                // Clicking anywhere inside the card-news-slider container advances the page
+                pdfSlider.addEventListener('click', (e) => {
+                    // Prevent advancing if the user clicked navigation buttons or progress badges
+                    if (e.target.closest('.slider-nav') || e.target.closest('.slider-pagination')) {
+                        return;
+                    }
+                    goToNextSlide();
+                });
+            }).catch(err => {
+                console.error("Error rendering PDF pages:", err);
+                if (sliderLoading) {
+                    sliderLoading.innerHTML = `<p style="color: #ef4444; font-weight: 600; padding: 20px; text-align: center;">카드뉴스 페이지를 그리는 도중 오류가 발생했습니다.</p>`;
+                }
+            });
+        }).catch(err => {
+            console.error("Error loading PDF document:", err);
+            if (sliderLoading) {
+                sliderLoading.innerHTML = `<p style="color: #ef4444; font-weight: 600; padding: 20px; text-align: center;">PDF 카드뉴스 파일을 불러올 수 없습니다. 경로 또는 상태를 확인해 주세요.</p>`;
+            }
+        });
+
+        // Function to render a single PDF page onto a dynamic Canvas element
+        function renderPage(pageNum) {
+            return pdfDoc.getPage(pageNum).then(page => {
+                const slideDiv = document.createElement('div');
+                slideDiv.className = 'card-slide';
+                slideDiv.dataset.page = pageNum;
+
+                const canvas = document.createElement('canvas');
+                slideDiv.appendChild(canvas);
+                pdfSlider.appendChild(slideDiv);
+
+                const ctx = canvas.getContext('2d');
+                
+                // Render at a high density (scale: 2.0) for crisp, premium rendering on high-DPI screens
+                const viewport = page.getViewport({ scale: 2.0 });
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                };
+
+                return page.render(renderContext).promise;
+            });
+        }
+
+        // Helper to update the pagination badge
+        function updatePageIndicator(current, total) {
+            if (pageIndicator) {
+                pageIndicator.textContent = `${current} / ${total}`;
+            }
+        }
+
+        // Horizontal slider transition engine
+        function goToSlide(nextIndex) {
+            if (isTransitioning || slides.length === 0) return;
+            isTransitioning = true;
+
+            const total = slides.length;
+            const currentIndex = currentSlideIndex;
+
+            // Handle infinite circular loop
+            nextIndex = (nextIndex + total) % total;
+
+            const currentSlide = slides[currentIndex];
+            const nextSlide = slides[nextIndex];
+
+            // Determine if we're moving forward or backward in the cycle
+            let isForward = nextIndex > currentIndex || (currentIndex === total - 1 && nextIndex === 0);
+            if (currentIndex === 0 && nextIndex === total - 1) {
+                isForward = false;
+            }
+
+            // Remove translation remnants
+            slides.forEach(slide => {
+                slide.classList.remove('prev-slide');
+            });
+
+            if (isForward) {
+                // Forward Translation (Right to Left):
+                // 1. Current slide slides out to the left
+                currentSlide.classList.remove('active');
+                currentSlide.classList.add('prev-slide');
+
+                // 2. Next slide starts at right (100%) and slides into focus (0)
+                nextSlide.style.transition = 'none';
+                nextSlide.classList.remove('prev-slide');
+                nextSlide.classList.remove('active');
+                nextSlide.offsetHeight; // Force DOM layout reflow
+                nextSlide.style.transition = '';
+                nextSlide.classList.add('active');
+            } else {
+                // Backward Translation (Left to Right):
+                // 1. Current slide slides out to the right (default transform 100%)
+                currentSlide.classList.remove('active');
+
+                // 2. Next slide starts at left (-100%) and slides into focus (0)
+                nextSlide.style.transition = 'none';
+                nextSlide.classList.add('prev-slide');
+                nextSlide.classList.remove('active');
+                nextSlide.offsetHeight; // Force DOM layout reflow
+                nextSlide.style.transition = '';
+                nextSlide.classList.remove('prev-slide');
+                nextSlide.classList.add('active');
+            }
+
+            currentSlideIndex = nextIndex;
+            updatePageIndicator(currentSlideIndex + 1, total);
+
+            // Re-enable clicks after the CSS slide transition finishes
+            setTimeout(() => {
+                isTransitioning = false;
+            }, 600); // 0.6s matches CSS transition duration
+        }
+
+        function goToNextSlide() {
+            goToSlide(currentSlideIndex + 1);
+        }
+
+        function goToPrevSlide() {
+            goToSlide(currentSlideIndex - 1);
+        }
+
+        // Nav arrow event bindings with stopPropagation to avoid parent container click double-triggers
+        if (sliderPrevBtn) {
+            sliderPrevBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                goToPrevSlide();
+            });
+        }
+
+        if (sliderNextBtn) {
+            sliderNextBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                goToNextSlide();
+            });
+        }
+    }
 });
