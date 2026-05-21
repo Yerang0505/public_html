@@ -312,4 +312,76 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
+
+    // --- Premium Document Viewer (주요사업실적) ---
+    const recordsViewer = document.getElementById('records-viewer');
+    const viewerLoading = document.getElementById('viewer-loading');
+
+    if (recordsViewer && viewerLoading) {
+        let pdfDoc = null;
+        const pdfUrl = '지명원.pdf';
+        const startPage = 10;
+        const endPage = 21;
+
+        // Initialize PDF.js loading for 지명원
+        pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+            pdfDoc = pdf;
+            
+            // Loop sequentially from page 10 to 21 to avoid page order scrambling and render lag
+            let renderPromise = Promise.resolve();
+            for (let i = startPage; i <= endPage; i++) {
+                const pageNum = i;
+                renderPromise = renderPromise.then(() => renderRecordPage(pageNum));
+            }
+
+            renderPromise.then(() => {
+                // Hide the loader once everything is rendered
+                viewerLoading.style.display = 'none';
+                
+                // Add class to trigger fade-in transition
+                const wrappers = recordsViewer.querySelectorAll('.pdf-page-wrapper');
+                wrappers.forEach(wrapper => {
+                    wrapper.classList.add('rendered');
+                });
+            }).catch(err => {
+                console.error("Error rendering record pages:", err);
+                viewerLoading.innerHTML = `<p style="color: #ef4444; font-weight: 600; padding: 20px; text-align: center;">실적 페이지를 그리는 도중 오류가 발생했습니다.</p>`;
+            });
+        }).catch(err => {
+            console.error("Error loading record PDF:", err);
+            viewerLoading.innerHTML = `<p style="color: #ef4444; font-weight: 600; padding: 20px; text-align: center;">지명원 파일을 불러올 수 없습니다. 경로 또는 상태를 확인해 주세요.</p>`;
+        });
+
+        // Function to render a single PDF page into a dynamic wrapper and canvas
+        function renderRecordPage(pageNum) {
+            return pdfDoc.getPage(pageNum).then(page => {
+                const pageWrapperDiv = document.createElement('div');
+                pageWrapperDiv.className = 'pdf-page-wrapper';
+                
+                const canvas = document.createElement('canvas');
+                pageWrapperDiv.appendChild(canvas);
+                
+                const label = document.createElement('div');
+                label.className = 'page-number-label';
+                label.textContent = `페이지 ${pageNum}`;
+                pageWrapperDiv.appendChild(label);
+                
+                recordsViewer.appendChild(pageWrapperDiv);
+
+                const ctx = canvas.getContext('2d');
+                
+                // Scale 2.0 for premium high-resolution render (crisp text)
+                const viewport = page.getViewport({ scale: 2.0 });
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                };
+
+                return page.render(renderContext).promise;
+            });
+        }
+    }
 });
