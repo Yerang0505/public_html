@@ -313,75 +313,163 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Premium Document Viewer (주요사업실적) ---
-    const recordsViewer = document.getElementById('records-viewer');
-    const viewerLoading = document.getElementById('viewer-loading');
+    // --- '주요사업실적' 및 '인증등록현황' 인터랙티브 제어 엔진 ---
+    const recordsTabs = document.querySelector('.records-tabs');
+    
+    if (recordsTabs) {
+        const tabButtons = document.querySelectorAll('.records-tab-btn');
+        const tabPanes = document.querySelectorAll('.tab-pane');
 
-    if (recordsViewer && viewerLoading) {
-        let pdfDoc = null;
-        const pdfUrl = '지명원.pdf';
-        const startPage = 10;
-        const endPage = 21;
+        // 1. 탭 전환 기능
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetTab = btn.getAttribute('data-tab');
 
-        // Initialize PDF.js loading for 지명원
-        pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
-            pdfDoc = pdf;
-            
-            // Loop sequentially from page 10 to 21 to avoid page order scrambling and render lag
-            let renderPromise = Promise.resolve();
-            for (let i = startPage; i <= endPage; i++) {
-                const pageNum = i;
-                renderPromise = renderPromise.then(() => renderRecordPage(pageNum));
-            }
+                // 탭 버튼 활성화 상태 전환
+                tabButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
 
-            renderPromise.then(() => {
-                // Hide the loader once everything is rendered
-                viewerLoading.style.display = 'none';
-                
-                // Add class to trigger fade-in transition
-                const wrappers = recordsViewer.querySelectorAll('.pdf-page-wrapper');
-                wrappers.forEach(wrapper => {
-                    wrapper.classList.add('rendered');
+                // 탭 내용 활성화 상태 전환
+                tabPanes.forEach(pane => {
+                    if (pane.id === targetTab) {
+                        pane.classList.add('active');
+                    } else {
+                        pane.classList.remove('active');
+                    }
                 });
-            }).catch(err => {
-                console.error("Error rendering record pages:", err);
-                viewerLoading.innerHTML = `<p style="color: #ef4444; font-weight: 600; padding: 20px; text-align: center;">실적 페이지를 그리는 도중 오류가 발생했습니다.</p>`;
+
+                // Scroll Animation Reflow
+                if (typeof observer !== 'undefined' && observer.observe) {
+                    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+                }
             });
-        }).catch(err => {
-            console.error("Error loading record PDF:", err);
-            viewerLoading.innerHTML = `<p style="color: #ef4444; font-weight: 600; padding: 20px; text-align: center;">지명원 파일을 불러올 수 없습니다. 경로 또는 상태를 확인해 주세요.</p>`;
         });
 
-        // Function to render a single PDF page into a dynamic wrapper and canvas
-        function renderRecordPage(pageNum) {
-            return pdfDoc.getPage(pageNum).then(page => {
-                const pageWrapperDiv = document.createElement('div');
-                pageWrapperDiv.className = 'pdf-page-wrapper';
-                
-                const canvas = document.createElement('canvas');
-                pageWrapperDiv.appendChild(canvas);
-                
-                const label = document.createElement('div');
-                label.className = 'page-number-label';
-                label.textContent = `페이지 ${pageNum}`;
-                pageWrapperDiv.appendChild(label);
-                
-                recordsViewer.appendChild(pageWrapperDiv);
+        // 2. 실적 테이블 실시간 검색 및 카테고리 필터링 엔진
+        const searchInput = document.getElementById('records-search');
+        const filterBtns = document.querySelectorAll('.records-filter-btn');
+        const tableRows = document.querySelectorAll('#delivery-table tbody tr');
+        const noResultsMsg = document.getElementById('no-results-msg');
 
-                const ctx = canvas.getContext('2d');
-                
-                // Scale 2.0 for premium high-resolution render (crisp text)
-                const viewport = page.getViewport({ scale: 2.0 });
-                canvas.width = viewport.width;
-                canvas.height = viewport.height;
+        let activeFilter = 'all';
+        let searchQuery = '';
 
-                const renderContext = {
-                    canvasContext: ctx,
-                    viewport: viewport
-                };
+        function filterDeliveryTable() {
+            let visibleRowsCount = 0;
 
-                return page.render(renderContext).promise;
+            tableRows.forEach(row => {
+                const clientName = row.querySelector('.client-name').textContent.toLowerCase();
+                const projectTitle = row.querySelector('.project-title').textContent.toLowerCase();
+                const rowCategory = row.getAttribute('data-category');
+
+                const matchesSearch = clientName.includes(searchQuery) || projectTitle.includes(searchQuery);
+                const matchesFilter = activeFilter === 'all' || rowCategory === activeFilter;
+
+                if (matchesSearch && matchesFilter) {
+                    row.style.display = '';
+                    visibleRowsCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            // 결과 없음 메시지 제어
+            if (visibleRowsCount === 0) {
+                noResultsMsg.style.display = 'block';
+            } else {
+                noResultsMsg.style.display = 'none';
+            }
+        }
+
+        // 실시간 타이핑 이벤트 바인딩
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value.toLowerCase().trim();
+                filterDeliveryTable();
             });
         }
+
+        // 카테고리 필터 클릭 이벤트 바인딩
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                activeFilter = btn.getAttribute('data-filter');
+                filterDeliveryTable();
+            });
+        });
+
+        // 3. 고해상도 원본 스캔본 라이트박스 모달 엔진
+        const lightboxModal = document.getElementById('lightbox-modal');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCaption = document.getElementById('lightbox-caption');
+        const lightboxClose = document.getElementById('lightbox-close');
+
+        function openLightbox(imageSrc, captionText) {
+            if (!lightboxModal || !lightboxImg) return;
+            lightboxImg.src = imageSrc;
+            if (lightboxCaption && captionText) {
+                lightboxCaption.textContent = captionText;
+            }
+            lightboxModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // 뒷배경 스크롤 방지
+        }
+
+        function closeLightbox() {
+            if (!lightboxModal) return;
+            lightboxModal.classList.remove('active');
+            document.body.style.overflow = ''; // 뒷배경 스크롤 복원
+            setTimeout(() => {
+                if (lightboxImg) lightboxImg.src = '';
+            }, 300);
+        }
+
+        // '실적표 원본 스캔 보기' 버튼 바인딩
+        const btnViewScan = document.querySelector('.btn-view-scan');
+        if (btnViewScan) {
+            btnViewScan.addEventListener('click', () => {
+                const scanImg = btnViewScan.getAttribute('data-scan');
+                openLightbox(`./${scanImg}`, '지명원 10P - 주요사업실적 원본 스캔본');
+            });
+        }
+
+        // 각 인증 카드의 '원본 스캔 보기' 버튼 바인딩
+        const certZoomBtns = document.querySelectorAll('.btn-zoom-scan, .cert-image-frame');
+        certZoomBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // 최인접 .cert-card를 찾거나 직접 data-scan 읽기
+                const card = btn.closest('.cert-card');
+                const zoomBtn = card ? card.querySelector('.btn-zoom-scan') : null;
+                const scanImg = zoomBtn ? zoomBtn.getAttribute('data-scan') : btn.getAttribute('data-scan');
+                const certTitle = card ? card.querySelector('.cert-title').textContent : '인증서 원본 스캔본';
+
+                if (scanImg) {
+                    openLightbox(`./${scanImg}`, `${certTitle} - 공식 스캔본`);
+                }
+            });
+        });
+
+        // 라이트박스 닫기 바인딩
+        if (lightboxClose) {
+            lightboxClose.addEventListener('click', closeLightbox);
+        }
+
+        if (lightboxModal) {
+            // 라이트박스 바깥 영역 클릭 시 닫기
+            lightboxModal.addEventListener('click', (e) => {
+                if (e.target === lightboxModal || e.target.classList.contains('lightbox-content-wrapper')) {
+                    closeLightbox();
+                }
+            });
+        }
+
+        // ESC 키 입력 시 닫기
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightboxModal && lightboxModal.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
     }
 });

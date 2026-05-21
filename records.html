@@ -36,50 +36,611 @@
     </section>
 
     <!-- Main Content Section -->
-    <section class="section" style="background-color: #f8fafc; padding: 80px 0;">
+    <section class="section" style="background-color: #f8fafc; padding: 60px 0 100px 0;">
         <div class="container">
             
             <!-- Section Title and Intro -->
-            <div class="product-intro reveal active" style="margin-bottom: 50px; text-align: center; max-width: 850px; margin-left: auto; margin-right: auto;">
-                <h2 style="font-size: 2.2rem; color: var(--primary-dark); margin-bottom: 20px; font-weight: 700;">공식 지명원 실적 요약 (10P ~ 21P)</h2>
+            <div class="product-intro reveal active" style="margin-bottom: 40px; text-align: center; max-width: 850px; margin-left: auto; margin-right: auto;">
+                <h2 style="font-size: 2.2rem; color: var(--primary-dark); margin-bottom: 20px; font-weight: 700;">공식 지명원 실적 및 인증 현황</h2>
                 <div class="divider" style="width: 80px; height: 5px; background: var(--secondary); margin: 0 auto 20px; border-radius: 10px;"></div>
                 <p style="color: var(--text-main); font-size: 1.15rem; line-height: 1.8;">
-                    비에이텍은 다수의 하수종말처리장, 국가 화학공정 플랜트, 연구 기관 및 민간 제조 라인에 고품질 무맥동 정량펌프 시스템을 설계·제작·설치해 왔습니다. 
-                    아래 공식 지명원 실적 리스트에서 비에이텍의 폭넓은 산업 성과와 검증된 정밀 엔지니어링 실적을 확인하실 수 있습니다.
+                    비에이텍은 공공 하수처리장, 상수도 시설, 관공서 및 화학공정 연구 단지에 정밀 펌프 제어 시스템을 성실히 구축해 왔습니다. 
+                    지명원 10P의 공식 사업 실적 데이터와 11P~21P의 10종 국가 공인 인증 현황을 디지털 레이아웃으로 한눈에 확인하십시오.
                 </p>
             </div>
 
-            <!-- PDF Smart Viewer Container -->
-            <div class="pdf-viewer-container reveal active">
+            <!-- Custom Tabs Navigation -->
+            <div class="records-tabs reveal active">
+                <button class="records-tab-btn active" data-tab="tab-delivery">
+                    <i class="fas fa-clipboard-list"></i> 주요 납품 실적 (10P)
+                </button>
+                <button class="records-tab-btn" data-tab="tab-cert">
+                    <i class="fas fa-award"></i> 인증 및 등록 현황 (11P~21P)
+                </button>
+            </div>
+
+            <!-- Tab Contents -->
+            <div class="records-tab-content">
                 
-                <!-- Viewer Header Glass Toolbar -->
-                <div class="viewer-toolbar">
-                    <div class="toolbar-left">
-                        <i class="far fa-file-alt toolbar-icon"></i>
-                        <span class="toolbar-title">비에이텍_지명원_실적본.pdf</span>
+                <!-- TAB 1: 주요 납품 실적 -->
+                <div id="tab-delivery" class="tab-pane active">
+                    
+                    <!-- Search & Filter Controls -->
+                    <div class="records-controls-card">
+                        <div class="search-box-wrapper">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="records-search" placeholder="발주처 또는 공사명을 검색하세요...">
+                        </div>
+                        <div class="filter-buttons-wrapper">
+                            <span class="filter-label"><i class="fas fa-filter"></i> 제품 분류:</span>
+                            <button class="records-filter-btn active" data-filter="all">전체</button>
+                            <button class="records-filter-btn" data-filter="수중펌프">수중펌프</button>
+                            <button class="records-filter-btn" data-filter="부스터펌프">부스터펌프</button>
+                            <button class="records-filter-btn" data-filter="심정펌프">심정펌프</button>
+                            <button class="records-filter-btn" data-filter="송수/진공펌프">송수/진공펌프</button>
+                            <button class="records-filter-btn" data-filter="기타/수리">기타 및 수리</button>
+                        </div>
+                        <button class="btn-view-scan" data-scan="record_img_10_0.png">
+                            <i class="fas fa-image"></i> 실적표 원본 스캔 보기
+                        </button>
                     </div>
-                    <div class="toolbar-right">
-                        <a href="지명원.pdf" download="비에이텍_공식_지명원.pdf" class="btn-download-viewer">
-                            <i class="fas fa-download"></i> 지명원 전체 다운로드
-                        </a>
+
+                    <!-- Delivery Table -->
+                    <div class="table-outer-wrapper">
+                        <div class="records-table-container">
+                            <table class="records-data-table" id="delivery-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 70px;">번호</th>
+                                        <th style="width: 250px;">발주처</th>
+                                        <th style="width: 120px;">납품일자</th>
+                                        <th>주요 사업 및 공사명</th>
+                                        <th style="width: 150px;">제품 구분</th>
+                                        <th style="width: 150px;">비고</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-category="송수/진공펌프">
+                                        <td>404</td>
+                                        <td class="client-name">홍천군</td>
+                                        <td class="delivery-date">2019.06</td>
+                                        <td class="project-title">농업용수(양덕원리 취수펌프) 배수관로 설치공사</td>
+                                        <td>진공펌프</td>
+                                        <td>비에이텍 주식회사</td>
+                                    </tr>
+                                    <tr data-category="부스터펌프">
+                                        <td>405</td>
+                                        <td class="client-name">춘천시 상하수도사업본부</td>
+                                        <td class="delivery-date">2019.08</td>
+                                        <td class="project-title">2019년 상수도시설 확충공사 (서면당림리 272번지일원외)</td>
+                                        <td>부스터펌프</td>
+                                        <td>비에이텍 주식회사</td>
+                                    </tr>
+                                    <tr data-category="송수/진공펌프">
+                                        <td>406</td>
+                                        <td class="client-name">춘천시 상하수도사업본부</td>
+                                        <td class="delivery-date">2019.06</td>
+                                        <td class="project-title">용산정수장 송수펌프</td>
+                                        <td>송수펌프</td>
+                                        <td>비에이텍 주식회사</td>
+                                    </tr>
+                                    <tr data-category="수중펌프">
+                                        <td>407</td>
+                                        <td class="client-name">철원군 상하수도사업소</td>
+                                        <td class="delivery-date">2019.05</td>
+                                        <td class="project-title">김화하수처리구역(와수3처리분구) 하수관거정비사업</td>
+                                        <td>수중볼텍스펌프</td>
+                                        <td>비에이텍 주식회사</td>
+                                    </tr>
+                                    <tr data-category="수중펌프">
+                                        <td>408</td>
+                                        <td class="client-name">춘천시 상하수도사업본부</td>
+                                        <td class="delivery-date">2019.06</td>
+                                        <td class="project-title">근화동 유수지 배수펌프 증설공사</td>
+                                        <td>수중펌프</td>
+                                        <td>비에이텍 주식회사</td>
+                                    </tr>
+                                    <tr data-category="수중펌프">
+                                        <td>409</td>
+                                        <td class="client-name">강원도 인재개발원</td>
+                                        <td class="delivery-date">2019.06</td>
+                                        <td class="project-title">본관기계실 노후펌프 교체공사</td>
+                                        <td>수중펌프</td>
+                                        <td>비에이텍 주식회사</td>
+                                    </tr>
+                                    <tr data-category="심정펌프">
+                                        <td>410</td>
+                                        <td class="client-name">춘천시 상하수도사업본부</td>
+                                        <td class="delivery-date">2019.06</td>
+                                        <td class="project-title">솔무치지구 밭기반 정비사업 1차분</td>
+                                        <td>심정펌프</td>
+                                        <td>비에이텍 주식회사</td>
+                                    </tr>
+                                    <tr data-category="부스터펌프">
+                                        <td>411</td>
+                                        <td class="client-name">홍천군</td>
+                                        <td class="delivery-date">2019.06</td>
+                                        <td class="project-title">홍천군 관내 가압장 펌프 납품</td>
+                                        <td>부스터펌프</td>
+                                        <td>비에이텍 주식회사</td>
+                                    </tr>
+                                    <tr data-category="부스터펌프">
+                                        <td>412</td>
+                                        <td class="client-name">삼척시 상수도사업소</td>
+                                        <td class="delivery-date">2019.08</td>
+                                        <td class="project-title">미로상수도 확장공사</td>
+                                        <td>부스터펌프</td>
+                                        <td>비에이텍 주식회사</td>
+                                    </tr>
+                                    <tr data-category="부스터펌프">
+                                        <td>413</td>
+                                        <td class="client-name">양양군 상하수도사업소</td>
+                                        <td class="delivery-date">2019.06</td>
+                                        <td class="project-title">강현가압장 가압시설 증설공사</td>
+                                        <td>부스터펌프</td>
+                                        <td>비에이텍 주식회사</td>
+                                    </tr>
+                                    <tr data-category="기타/수리">
+                                        <td>414</td>
+                                        <td class="client-name">양구군 상하수도사업소</td>
+                                        <td class="delivery-date">2019.07</td>
+                                        <td class="project-title">송현 공공하수처리시설 설치공사</td>
+                                        <td>펌프류</td>
+                                        <td>비에이텍 주식회사</td>
+                                    </tr>
+                                    <tr data-category="기타/수리">
+                                        <td>415</td>
+                                        <td class="client-name">양구군 상하수도사업소</td>
+                                        <td class="delivery-date">2019.07</td>
+                                        <td class="project-title">구암 공공하수처리시설 관급자재 - 펌프류</td>
+                                        <td>펌프류</td>
+                                        <td>비에이텍 주식회사</td>
+                                    </tr>
+                                    <tr data-category="기타/수리">
+                                        <td>416</td>
+                                        <td class="client-name">양구군 상하수도사업소</td>
+                                        <td class="delivery-date">2019.07</td>
+                                        <td class="project-title">죽곡 공공하수처리시설 관급자재 - 펌프류</td>
+                                        <td>펌프류</td>
+                                        <td>비에이텍 주식회사</td>
+                                    </tr>
+                                    <tr data-category="기타/수리">
+                                        <td>417</td>
+                                        <td class="client-name">삼척시 하수도사업소</td>
+                                        <td class="delivery-date">2019.06</td>
+                                        <td class="project-title">삼사빗물펌프장 펌프 수리 수선</td>
+                                        <td>펌프 수리</td>
+                                        <td>비에이텍 주식회사</td>
+                                    </tr>
+                                    <tr data-category="수중펌프">
+                                        <td>418</td>
+                                        <td class="client-name">철원군 농업기술센터</td>
+                                        <td class="delivery-date">2019.07</td>
+                                        <td class="project-title">2019년 만경보 수중펌프</td>
+                                        <td>수중펌프</td>
+                                        <td>비에이텍 주식회사</td>
+                                    </tr>
+                                    <tr data-category="수중펌프">
+                                        <td>419</td>
+                                        <td class="client-name">철원군 농업기술센터</td>
+                                        <td class="delivery-date">2019.07</td>
+                                        <td class="project-title">2019년 철원 대마지구(대마리 990번지) 수리시설 정비사업</td>
+                                        <td>수중펌프</td>
+                                        <td>비에이텍 주식회사</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- No Results Message -->
+                            <div class="table-no-results" id="no-results-msg" style="display: none;">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <p>검색 조건에 맞는 실적 데이터가 존재하지 않습니다.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Dynamic Page Render Area -->
-                <div class="pdf-pages-list" id="records-viewer">
+                <!-- TAB 2: 인증 및 등록 현황 -->
+                <div id="tab-cert" class="tab-pane">
                     
-                    <!-- Loading Spinner -->
-                    <div class="slider-loading" id="viewer-loading">
-                        <div class="spinner"></div>
-                        <p>지명원 실적 페이지를 불러오는 중입니다...</p>
+                    <!-- Intro status text from Page 11 -->
+                    <div class="cert-intro-bar">
+                        <i class="fas fa-check-circle cert-check-icon"></i>
+                        <span>비에이텍(주)은 국가 공인 직접생산, 품질경영시스템(ISO 9001), 경영혁신형 중소기업(Main-Biz) 등의 정식 인증을 완료하여 우수한 기술력과 경영의 공신력을 대내외적으로 입증받았습니다.</span>
                     </div>
 
+                    <!-- Certificate Grid -->
+                    <div class="certs-grid">
+                        
+                        <!-- Card 1: 사업자등록증 (Page 12) -->
+                        <div class="cert-card">
+                            <div class="cert-image-frame">
+                                <img src="./record_img_12_0.png" alt="사업자등록증" class="cert-thumbnail">
+                                <div class="cert-image-overlay">
+                                    <button class="btn-zoom-scan" data-scan="record_img_12_0.png">
+                                        <i class="fas fa-search-plus"></i> 원본 스캔 보기
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="cert-details">
+                                <span class="cert-badge accent-badge">기본면허</span>
+                                <h3 class="cert-title">사업자등록증</h3>
+                                <table class="cert-mini-table">
+                                    <tr>
+                                        <th>등록번호</th>
+                                        <td>221-81-42625</td>
+                                    </tr>
+                                    <tr>
+                                        <th>법인명</th>
+                                        <td>비에이텍(주)</td>
+                                    </tr>
+                                    <tr>
+                                        <th>대표자</th>
+                                        <td>조세연</td>
+                                    </tr>
+                                    <tr>
+                                        <th>개업일자</th>
+                                        <td>2013년 02월 15일</td>
+                                    </tr>
+                                    <tr>
+                                        <th>주요업종</th>
+                                        <td>제조업 (액체 펌프 제조업 외)</td>
+                                    </tr>
+                                    <tr>
+                                        <th>사업장</th>
+                                        <td>춘천시 퇴계공단2길 64</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: 공장등록증명서 (Page 13) -->
+                        <div class="cert-card">
+                            <div class="cert-image-frame">
+                                <img src="./record_img_13_0.png" alt="공장등록증명서" class="cert-thumbnail">
+                                <div class="cert-image-overlay">
+                                    <button class="btn-zoom-scan" data-scan="record_img_13_0.png">
+                                        <i class="fas fa-search-plus"></i> 원본 스캔 보기
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="cert-details">
+                                <span class="cert-badge secondary-badge">자체 공장</span>
+                                <h3 class="cert-title">공장등록증명서</h3>
+                                <table class="cert-mini-table">
+                                    <tr>
+                                        <th>회사명</th>
+                                        <td>비에이텍주식회사</td>
+                                    </tr>
+                                    <tr>
+                                        <th>등록일자</th>
+                                        <td>2023년 06월 08일</td>
+                                    </tr>
+                                    <tr>
+                                        <th>공장소재지</th>
+                                        <td>춘천시 퇴계공단2길 64 (퇴계동)</td>
+                                    </tr>
+                                    <tr>
+                                        <th>분류번호</th>
+                                        <td>29131 (액체 펌프 제조업 외)</td>
+                                    </tr>
+                                    <tr>
+                                        <th>용지면적</th>
+                                        <td>1,970.3 ㎡ (자가 소유)</td>
+                                    </tr>
+                                    <tr>
+                                        <th>제조시설</th>
+                                        <td>제조 494 ㎡ / 부대 280 ㎡</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: 산업단지 입주확인서 (Page 14) -->
+                        <div class="cert-card">
+                            <div class="cert-image-frame">
+                                <img src="./record_img_14_0.png" alt="산업단지 입주계약 확인서" class="cert-thumbnail">
+                                <div class="cert-image-overlay">
+                                    <button class="btn-zoom-scan" data-scan="record_img_14_0.png">
+                                        <i class="fas fa-search-plus"></i> 원본 스캔 보기
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="cert-details">
+                                <span class="cert-badge secondary-badge">공단 입주</span>
+                                <h3 class="cert-title">산업단지 입주계약 확인</h3>
+                                <table class="cert-mini-table">
+                                    <tr>
+                                        <th>기업명</th>
+                                        <td>비에이텍주식회사</td>
+                                    </tr>
+                                    <tr>
+                                        <th>단지구분</th>
+                                        <td>퇴계제2농공단지 입주</td>
+                                    </tr>
+                                    <tr>
+                                        <th>등록구분</th>
+                                        <td>입주계약 등록 (2023.06.26)</td>
+                                    </tr>
+                                    <tr>
+                                        <th>주요생산품</th>
+                                        <td>모터펌프</td>
+                                    </tr>
+                                    <tr>
+                                        <th>건축면적</th>
+                                        <td>774 ㎡</td>
+                                    </tr>
+                                    <tr>
+                                        <th>주관기관</th>
+                                        <td>한국산업단지공단 이사장</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Card 4: 직접생산확인증명서 (Page 15 & 16) -->
+                        <div class="cert-card">
+                            <div class="cert-image-frame">
+                                <img src="./record_img_15_0.png" alt="직접생산확인증명서" class="cert-thumbnail">
+                                <div class="cert-image-overlay">
+                                    <button class="btn-zoom-scan" data-scan="record_img_15_0.png">
+                                        <i class="fas fa-search-plus"></i> 원본 스캔 보기
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="cert-details">
+                                <span class="cert-badge primary-badge">조달 직접생산</span>
+                                <h3 class="cert-title">직접생산확인증명서</h3>
+                                <table class="cert-mini-table">
+                                    <tr>
+                                        <th>발급번호</th>
+                                        <td>제 2023-0616-00085 호</td>
+                                    </tr>
+                                    <tr>
+                                        <th>경쟁제품군</th>
+                                        <td>배관유체조절시스템 / 펌프류</td>
+                                    </tr>
+                                    <tr>
+                                        <th>주요품목</th>
+                                        <td>다단/단단/양흡입/편흡입 볼류트펌프,<br>정량펌프, 수중펌프, 오수/슬러지펌프,<br>심정펌프, 전진공동펌프, 부스터펌프</td>
+                                    </tr>
+                                    <tr>
+                                        <th>필수조건</th>
+                                        <td>토출구경 200mm ~ 600mm 미만 직접생산</td>
+                                    </tr>
+                                    <tr>
+                                        <th>발급기관</th>
+                                        <td>한국중소벤처기업유통원</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Card 5: ISO 9001 품질인증 국문 (Page 17) -->
+                        <div class="cert-card">
+                            <div class="cert-image-frame">
+                                <img src="./record_img_17_0.png" alt="ISO 9001 품질경영시스템 인증서 국문" class="cert-thumbnail">
+                                <div class="cert-image-overlay">
+                                    <button class="btn-zoom-scan" data-scan="record_img_17_0.png">
+                                        <i class="fas fa-search-plus"></i> 원본 스캔 보기
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="cert-details">
+                                <span class="cert-badge accent-badge">국제인증 (국문)</span>
+                                <h3 class="cert-title">ISO 9001 인증서 (국문)</h3>
+                                <table class="cert-mini-table">
+                                    <tr>
+                                        <th>인증규격</th>
+                                        <td>ISO 9001:2015 / KS Q ISO 9001:2015</td>
+                                    </tr>
+                                    <tr>
+                                        <th>인증번호</th>
+                                        <td>Q1291124</td>
+                                    </tr>
+                                    <tr>
+                                        <th>인증범위</th>
+                                        <td>부스터펌프시스템, 볼류트, 정량, 수중,<br>오수, 슬러지, 심정용, 전진공동 펌프 제조</td>
+                                    </tr>
+                                    <tr>
+                                        <th>최초인증</th>
+                                        <td>2024년 08월 23일</td>
+                                    </tr>
+                                    <tr>
+                                        <th>유효기간</th>
+                                        <td>2024.08.23 ~ 2027.08.22</td>
+                                    </tr>
+                                    <tr>
+                                        <th>인증기관</th>
+                                        <td>ICR (International Certification Registrar)</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Card 6: ISO 9001 품질인증 영문 (Page 18) -->
+                        <div class="cert-card">
+                            <div class="cert-image-frame">
+                                <img src="./record_img_18_0.png" alt="ISO 9001 품질경영시스템 인증서 영문" class="cert-thumbnail">
+                                <div class="cert-image-overlay">
+                                    <button class="btn-zoom-scan" data-scan="record_img_18_0.png">
+                                        <i class="fas fa-search-plus"></i> 원본 스캔 보기
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="cert-details">
+                                <span class="cert-badge accent-badge">국제인증 (영문)</span>
+                                <h3 class="cert-title">ISO 9001 Certificate (EN)</h3>
+                                <table class="cert-mini-table">
+                                    <tr>
+                                        <th>Standard</th>
+                                        <td>ISO 9001:2015 Quality Management</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Company</th>
+                                        <td>Blue Advanced Technology Co., Ltd.</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Scope</th>
+                                        <td>Manufacture of booster pump system, volute, quantification, underwater, sewage, sludge, deep use, forward joint pump.</td>
+                                    </tr>
+                                    <tr>
+                                        <th>No.</th>
+                                        <td>Q1291124</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Validity</th>
+                                        <td>23rd August 2024 ~ 22nd August 2027</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Registrar</th>
+                                        <td>International Certification Registrar Ltd.</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Card 7: 경영혁신형 중소기업 확인서 (Page 19) -->
+                        <div class="cert-card">
+                            <div class="cert-image-frame">
+                                <img src="./record_img_19_0.png" alt="Main-Biz 경영혁신형 중소기업 확인서" class="cert-thumbnail">
+                                <div class="cert-image-overlay">
+                                    <button class="btn-zoom-scan" data-scan="record_img_19_0.png">
+                                        <i class="fas fa-search-plus"></i> 원본 스캔 보기
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="cert-details">
+                                <span class="cert-badge primary-badge">정부 인증</span>
+                                <h3 class="cert-title">MAIN-BIZ 확인서</h3>
+                                <table class="cert-mini-table">
+                                    <tr>
+                                        <th>확인번호</th>
+                                        <td>제 R180801-01794 호</td>
+                                    </tr>
+                                    <tr>
+                                        <th>인증구분</th>
+                                        <td>경영혁신형 중소기업 (Main-Biz)</td>
+                                    </tr>
+                                    <tr>
+                                        <th>기업명</th>
+                                        <td>비에이텍(주)</td>
+                                    </tr>
+                                    <tr>
+                                        <th>대표자</th>
+                                        <td>조세연</td>
+                                    </tr>
+                                    <tr>
+                                        <th>유효기간</th>
+                                        <td>2024.09.14 ~ 2027.09.13</td>
+                                    </tr>
+                                    <tr>
+                                        <th>발급처</th>
+                                        <td>중소벤처기업부 장관</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Card 8: 한국펌프공업협동조합 조합원증 (Page 20) -->
+                        <div class="cert-card">
+                            <div class="cert-image-frame">
+                                <img src="./record_img_20_0.png" alt="한국펌프공업협동조합 조합원증" class="cert-thumbnail">
+                                <div class="cert-image-overlay">
+                                    <button class="btn-zoom-scan" data-scan="record_img_20_0.png">
+                                        <i class="fas fa-search-plus"></i> 원본 스캔 보기
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="cert-details">
+                                <span class="cert-badge secondary-badge">협동조합 공인</span>
+                                <h3 class="cert-title">조합원증</h3>
+                                <table class="cert-mini-table">
+                                    <tr>
+                                        <th>조합원명</th>
+                                        <td>비에이텍(주)</td>
+                                    </tr>
+                                    <tr>
+                                        <th>조합원번호</th>
+                                        <td>제 151 호</td>
+                                    </tr>
+                                    <tr>
+                                        <th>가입일자</th>
+                                        <td>2015년 01월 07일</td>
+                                    </tr>
+                                    <tr>
+                                        <th>조합명</th>
+                                        <td>한국펌프공업협동조합</td>
+                                    </tr>
+                                    <tr>
+                                        <th>대표자</th>
+                                        <td>조세연</td>
+                                    </tr>
+                                    <tr>
+                                        <th>근거조항</th>
+                                        <td>조합 정관 제9조 및 제11조 규정 공인</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Card 9: 강원도지사 표창장 (Page 21) -->
+                        <div class="cert-card">
+                            <div class="cert-image-frame">
+                                <img src="./record_img_21_0.png" alt="강원도지사 표창장" class="cert-thumbnail">
+                                <div class="cert-image-overlay">
+                                    <button class="btn-zoom-scan" data-scan="record_img_21_0.png">
+                                        <i class="fas fa-search-plus"></i> 원본 스캔 보기
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="cert-details">
+                                <span class="cert-badge accent-badge">수상 및 포상</span>
+                                <h3 class="cert-title">도지사 표창장</h3>
+                                <table class="cert-mini-table">
+                                    <tr>
+                                        <th>표창번호</th>
+                                        <td>제 111-4334 호</td>
+                                    </tr>
+                                    <tr>
+                                        <th>기업명</th>
+                                        <td>비에이텍(주)</td>
+                                    </tr>
+                                    <tr>
+                                        <th>수상자</th>
+                                        <td>대표이사 조세연 귀하</td>
+                                    </tr>
+                                    <tr>
+                                        <th>수여일자</th>
+                                        <td>2017년 12월 29일</td>
+                                    </tr>
+                                    <tr>
+                                        <th>수여목적</th>
+                                        <td>지역발전 헌신 및 상수도 관리 활동 기여</td>
+                                    </tr>
+                                    <tr>
+                                        <th>수여자</th>
+                                        <td>강원도지사 최문순</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
 
             </div>
 
         </div>
     </section>
+
+    <!-- Interactive Lightbox Modal -->
+    <div class="custom-lightbox-modal" id="lightbox-modal">
+        <span class="lightbox-close-btn" id="lightbox-close">&times;</span>
+        <div class="lightbox-content-wrapper">
+            <img class="lightbox-image" id="lightbox-img" src="" alt="지명원 원본 스캔 이미지">
+            <div class="lightbox-caption" id="lightbox-caption">원본 지명원 스캔 이미지</div>
+        </div>
+    </div>
 
     <!-- Footer Section -->
     <footer>
@@ -120,11 +681,6 @@
         </div>
     </footer>
 
-    <!-- pdf.js Library CDN & Worker Config -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
-    <script>
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
-    </script>
     <script src="script.js"></script>
 </body>
 </html>

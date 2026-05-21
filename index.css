@@ -1712,97 +1712,567 @@ footer {
     box-shadow: 0 6px 18px rgba(0, 210, 255, 0.35);
 }
 
-.pdf-pages-list {
+/* --- 주요사업실적 & 인증등록현황 프리미엄 개편 스타일 --- */
+
+/* 탭 네비게이션 */
+.records-tabs {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 10;
+}
+
+.records-tab-btn {
+    padding: 1rem 2.2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-main);
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
     align-items: center;
-    gap: 30px;
-    padding: 40px 20px;
-    max-height: 800px;
-    overflow-y: auto;
-    scroll-behavior: smooth;
-    background: #0f172a;
+    gap: 10px;
+    box-shadow: var(--shadow-sm);
 }
 
-/* Custom scrollbar for document list */
-.pdf-pages-list::-webkit-scrollbar {
-    width: 8px;
+.records-tab-btn:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.9);
+    border-color: var(--secondary);
+    color: var(--primary);
+    box-shadow: 0 10px 20px rgba(0, 78, 146, 0.1);
 }
 
-.pdf-pages-list::-webkit-scrollbar-track {
-    background: rgba(15, 23, 42, 0.5);
+.records-tab-btn.active {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: var(--white);
+    border-color: var(--primary);
+    box-shadow: 0 10px 25px rgba(0, 78, 146, 0.35);
 }
 
-.pdf-pages-list::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
-}
-
-.pdf-pages-list::-webkit-scrollbar-thumb:hover {
-    background: var(--secondary);
-}
-
-.pdf-page-wrapper {
+/* 탭 컨텐츠 래퍼 */
+.records-tab-content {
     position: relative;
     width: 100%;
-    max-width: 800px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-.pdf-page-wrapper.rendered {
+.tab-pane {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.tab-pane.active {
+    display: block;
     opacity: 1;
     transform: translateY(0);
 }
 
-.pdf-page-wrapper canvas {
-    width: 100%;
-    height: auto;
-    display: block;
+/* 검색 & 필터 조작 카드 */
+.records-controls-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
 }
 
-.page-number-label {
+.search-box-wrapper {
+    position: relative;
+    flex: 1;
+    min-width: 300px;
+}
+
+.search-box-wrapper .search-icon {
     position: absolute;
-    bottom: 12px;
-    right: 18px;
-    background: rgba(15, 23, 42, 0.85);
-    backdrop-filter: blur(6px);
-    color: rgba(255, 255, 255, 0.85);
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 0.78rem;
-    font-weight: 600;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    pointer-events: none;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 1.1rem;
 }
 
-/* Responsive viewer adaptations */
-@media (max-width: 768px) {
-    .viewer-toolbar {
+.search-box-wrapper input {
+    width: 100%;
+    padding: 14px 20px 14px 48px;
+    font-size: 0.95rem;
+    color: var(--text-main);
+    background: var(--white);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    border-radius: 12px;
+    outline: none;
+    transition: var(--transition);
+}
+
+.search-box-wrapper input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0, 78, 146, 0.15);
+}
+
+.filter-buttons-wrapper {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.filter-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-right: 8px;
+}
+
+.records-filter-btn {
+    padding: 8px 16px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    background: var(--white);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--text-muted);
+}
+
+.records-filter-btn:hover {
+    border-color: var(--secondary);
+    color: var(--primary);
+    background: rgba(0, 210, 255, 0.05);
+}
+
+.records-filter-btn.active {
+    background: var(--primary);
+    color: var(--white);
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(0, 78, 146, 0.2);
+}
+
+.btn-view-scan {
+    padding: 12px 20px;
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
+    color: var(--white);
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(0, 210, 255, 0.25);
+}
+
+.btn-view-scan:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 210, 255, 0.4);
+}
+
+/* 주요 납품 실적 데이터 테이블 */
+.table-outer-wrapper {
+    background: var(--white);
+    border-radius: 20px;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.records-table-container {
+    width: 100%;
+    overflow-x: auto;
+    position: relative;
+}
+
+.records-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+.records-data-table th {
+    background-color: var(--primary-dark);
+    color: var(--white);
+    padding: 18px 20px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.records-data-table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+    color: var(--text-main);
+    transition: var(--transition);
+}
+
+.records-data-table tbody tr {
+    transition: var(--transition);
+}
+
+.records-data-table tbody tr:nth-child(even) {
+    background-color: rgba(248, 250, 252, 0.6);
+}
+
+.records-data-table tbody tr:hover {
+    background-color: rgba(0, 210, 255, 0.05);
+}
+
+.records-data-table tbody tr td.client-name {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.records-data-table tbody tr td.delivery-date {
+    font-family: 'Outfit', sans-serif;
+    color: var(--text-muted);
+}
+
+.records-data-table tbody tr td.project-title {
+    font-weight: 500;
+}
+
+.table-no-results {
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.table-no-results i {
+    font-size: 3rem;
+    color: #cbd5e1;
+    margin-bottom: 15px;
+}
+
+.table-no-results p {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* 인증 등록 현황 탭 전용 */
+.cert-intro-bar {
+    background: linear-gradient(135deg, rgba(0, 78, 146, 0.05), rgba(0, 210, 255, 0.05));
+    border-left: 4px solid var(--secondary);
+    border-radius: 0 12px 12px 0;
+    padding: 18px 24px;
+    margin-bottom: 45px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.cert-check-icon {
+    font-size: 1.5rem;
+    color: var(--primary);
+    flex-shrink: 0;
+}
+
+.cert-intro-bar span {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--primary-dark);
+    line-height: 1.6;
+}
+
+/* 인증 카드 그리드 */
+.certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 30px;
+}
+
+.cert-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+}
+
+.cert-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 4, 40, 0.12);
+    border-color: var(--secondary);
+}
+
+.cert-image-frame {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    background: #0f172a;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+}
+
+.cert-thumbnail {
+    width: auto;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s ease;
+}
+
+.cert-card:hover .cert-thumbnail {
+    transform: scale(1.05);
+}
+
+.cert-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.cert-image-frame:hover .cert-image-overlay {
+    opacity: 1;
+}
+
+.btn-zoom-scan {
+    padding: 10px 20px;
+    background: var(--white);
+    color: var(--primary-dark);
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-zoom-scan:hover {
+    background: var(--secondary);
+    color: var(--white);
+    transform: scale(1.05);
+}
+
+.cert-details {
+    padding: 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.cert-badge {
+    align-self: flex-start;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.primary-badge {
+    background: rgba(0, 78, 146, 0.1);
+    color: var(--primary);
+}
+
+.secondary-badge {
+    background: rgba(0, 210, 255, 0.1);
+    color: var(--primary);
+    border: 1px solid rgba(0, 210, 255, 0.2);
+}
+
+.accent-badge {
+    background: rgba(0, 242, 254, 0.15);
+    color: var(--primary-dark);
+}
+
+.cert-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 15px;
+}
+
+.cert-mini-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.cert-mini-table th {
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding: 8px 10px 8px 0;
+    width: 80px;
+    vertical-align: top;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.4);
+}
+
+.cert-mini-table td {
+    color: var(--text-main);
+    padding: 8px 0;
+    font-weight: 500;
+    vertical-align: top;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.4);
+}
+
+.cert-mini-table tr:last-child th,
+.cert-mini-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* 라이트박스 모달 */
+.custom-lightbox-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    align-items: center;
+    justify-content: center;
+}
+
+.custom-lightbox-modal.active {
+    display: flex;
+    opacity: 1;
+}
+
+.lightbox-close-btn {
+    position: absolute;
+    top: 25px;
+    right: 35px;
+    color: #f1f5f9;
+    font-size: 40px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: var(--transition);
+    z-index: 2100;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+}
+
+.lightbox-close-btn:hover {
+    color: var(--secondary);
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+}
+
+.lightbox-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 90%;
+    max-height: 85%;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.4s ease;
+}
+
+.custom-lightbox-modal.active .lightbox-content-wrapper {
+    transform: scale(1);
+}
+
+.lightbox-image {
+    max-width: 100%;
+    max-height: 75vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lightbox-caption {
+    margin-top: 15px;
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    font-weight: 500;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 8px 20px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* 반응형 수정 */
+@media (max-width: 992px) {
+    .records-tabs {
         flex-direction: column;
-        gap: 12px;
         align-items: stretch;
-        padding: 15px 20px;
-        text-align: center;
     }
-    .toolbar-left {
+    .records-tab-btn {
         justify-content: center;
     }
-    .btn-download-viewer {
+}
+
+@media (max-width: 768px) {
+    .records-controls-card {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 20px;
+    }
+    .search-box-wrapper {
+        min-width: 100%;
+    }
+    .filter-buttons-wrapper {
+        justify-content: flex-start;
+    }
+    .btn-view-scan {
         justify-content: center;
         width: 100%;
     }
-    .pdf-pages-list {
-        padding: 20px 10px;
-        gap: 20px;
-        max-height: 550px;
+    .certs-grid {
+        grid-template-columns: 1fr;
+    }
+    .cert-image-frame {
+        height: 320px;
     }
 }
+
 
 
 
