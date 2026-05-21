@@ -430,7 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (btnViewScan) {
             btnViewScan.addEventListener('click', () => {
                 const scanImg = btnViewScan.getAttribute('data-scan');
-                openLightbox(`./${scanImg}`, '지명원 10P - 주요사업실적 원본 스캔본');
+                openLightbox(`./${scanImg}`, '지명원 - 주요사업실적 원본 스캔본');
             });
         }
 
