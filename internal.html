@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 기술설명 게시판 - (주)비에이텍</title>
+    <meta name="description" content="(주)비에이텍 내부 임직원을 위한 AI 기반 워터펌프 정비 및 기술 가이드 설명서 작성 게시판입니다.">
+    <link rel="stylesheet" href="index.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <nav id="navbar" class="scrolled">
+        <div class="container nav-content">
+            <a href="index.html" class="logo">(주)비에이텍<span>.</span></a>
+            <ul class="nav-links">
+                <li><a href="intro.html">기업소개</a></li>
+                <li><a href="product.html">주요제품</a></li>
+                <li><a href="equipment.html">장비</a></li>
+                <li><a href="records.html">주요사업실적</a></li>
+                <li><a href="map.html">찾아오시는 길</a></li>
+                <li><a href="internal.html" style="color: var(--secondary); font-weight: 700;">내부인용</a></li>
+                <li><a href="inquiry.html" class="btn" style="padding: 0.5rem 1.2rem; background: linear-gradient(135deg, var(--secondary), var(--primary)); color: white; border-radius: 20px;">문의하기</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Sub-Hero Section -->
+    <section class="sub-hero">
+        <div class="sub-hero-overlay"></div>
+        <div class="container sub-hero-content">
+            <h1 class="reveal active">내부인용 AI 설명 게시판</h1>
+            <p class="reveal active">정량펌프 제품군에 대한 정밀 진단, 고장 증상별 조치법 및 원리에 대하여 AI 기술 설명서를 작성하고 축적하는 지식 베이스 공간입니다.</p>
+        </div>
+    </section>
+
+    <!-- Main Content Section -->
+    <section class="section" style="background-color: #f8fafc; padding: 60px 0 100px 0;">
+        <div class="container">
+            
+            <!-- Section Header -->
+            <div class="product-intro reveal active" style="margin-bottom: 50px; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">
+                <h2 style="font-size: 2.2rem; color: var(--primary-dark); margin-bottom: 20px; font-weight: 700;">AI 기술 설명서 작성 및 조회</h2>
+                <div class="divider" style="width: 80px; height: 5px; background: var(--secondary); margin: 0 auto 20px; border-radius: 10px;"></div>
+                <p style="color: var(--text-main); font-size: 1.12rem; line-height: 1.8;">
+                    수정이 필요한 펌프 모델과 고장 키워드를 입력하고 <strong style="color: var(--primary); font-weight: 700;">"AI 자동 설명서 생성"</strong>을 실행해 보세요. 비에이텍 전문 엔지니어링 지식을 학습한 가상 AI 비서가 완벽한 해결책을 자동으로 작성해 줍니다. 직접 내용을 작성하여 일반 게시글로도 즉시 등록할 수 있습니다.
+                </p>
+            </div>
+
+            <!-- Two-Column Workspace Layout -->
+            <div class="internal-workspace-grid">
+                
+                <!-- Left: AI Explanation Writer Form -->
+                <div class="reveal active">
+                    <div class="internal-card card-glow">
+                        <div class="card-header-with-icon">
+                            <i class="fas fa-robot card-header-icon" style="color: var(--secondary);"></i>
+                            <h3>AI 설명서 신규 작성기</h3>
+                        </div>
+                        <form id="ai-form" novalidate style="margin-top: 20px;">
+                            
+                            <!-- Select: Target Product -->
+                            <div class="form-group">
+                                <label for="ai-product"><i class="fas fa-cogs form-field-icon"></i> 대상 제품군 <span class="required-star">*</span></label>
+                                <div class="select-wrapper">
+                                    <select id="ai-product" required>
+                                        <option value="" disabled selected hidden>대상 제품군을 선택해 주세요</option>
+                                        <option value="PKD 시리즈">PKD 시리즈 (무맥동 고정밀 정량펌프)</option>
+                                        <option value="수중볼텍스펌프">수중볼텍스펌프 (하수처리/슬러지 이송)</option>
+                                        <option value="부스터펌프">부스터펌프 (가압 급수 시스템)</option>
+                                        <option value="심정펌프">심정펌프 (심정용 지하수 취수)</option>
+                                        <option value="송수/진공펌프">송수 및 진공펌프 (농업/산업 용수)</option>
+                                        <option value="기타">기타 / 부가 장비</option>
+                                    </select>
+                                    <i class="fas fa-chevron-down select-arrow-icon"></i>
+                                </div>
+                                <div class="form-error-msg" id="error-ai-product">대상 제품군을 선택해 주세요.</div>
+                            </div>
+
+                            <!-- Input: Explanation Title -->
+                            <div class="form-group">
+                                <label for="ai-title"><i class="fas fa-file-signature form-field-icon"></i> 설명서 제목 <span class="required-star">*</span></label>
+                                <input type="text" id="ai-title" placeholder="예: PKD-200 모델 등속도 캠 교환 및 유량 오차 보정 안내" required>
+                                <div class="form-error-msg" id="error-ai-title">설명서 제목을 입력해 주세요.</div>
+                            </div>
+
+                            <!-- Input: Key Technical Keywords -->
+                            <div class="form-group">
+                                <label for="ai-keywords"><i class="fas fa-tags form-field-icon"></i> 핵심 기술 키워드 / 주요 고장증상 <span class="required-star">*</span></label>
+                                <input type="text" id="ai-keywords" placeholder="예: 맥동 현상, 소음 발생, 저유량, 유량 오차, 씰 손상" required>
+                                <div class="form-error-msg" id="error-ai-keywords">기술 키워드나 증상을 1개 이상 쉼표로 구분해 입력해 주세요.</div>
+                            </div>
+
+                            <!-- Input: Main Technical Explanation -->
+                            <div class="form-group">
+                                <label for="ai-content"><i class="fas fa-keyboard form-field-icon"></i> 기술 설명서 본문 <span class="required-star">*</span></label>
+                                <textarea id="ai-content" rows="10" placeholder="AI 자동 생성 버튼을 통해 내용을 실시간으로 채우거나, 직접 원인 분석 및 정비 지침을 작성해 주세요." required></textarea>
+                                <div class="form-error-msg" id="error-ai-content">내용을 입력하거나 AI 자동 생성을 실행해 주세요.</div>
+                            </div>
+
+                            <!-- Actions Row -->
+                            <div class="ai-action-buttons" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px;">
+                                <button type="button" class="btn-ai-generate" id="btn-ai-generate">
+                                    <i class="fas fa-wand-magic-sparkles animate-pulse"></i> AI 자동 설명서 생성
+                                </button>
+                                <button type="submit" class="btn-ai-submit" id="btn-ai-submit">
+                                    <i class="fas fa-plus-circle"></i> 게시판에 등록하기
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Right: AI Live Streaming Console Terminal -->
+                <div class="reveal active">
+                    <div class="ai-terminal-card">
+                        <div class="terminal-header">
+                            <div class="terminal-dots">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                            </div>
+                            <span class="terminal-title"><i class="fas fa-terminal"></i> BATECH AI-ENGINE v2.6.2</span>
+                            <span class="terminal-status" id="terminal-status">READY</span>
+                        </div>
+                        <div class="terminal-body" id="terminal-body">
+                            <div class="terminal-line"><span class="prompt">$</span> BATECH-AI-ENGINE 정밀 엔지니어링 데이터 초기화 완료.</div>
+                            <div class="terminal-line"><span class="prompt">$</span> 대기 중... 대상 제품과 키워드를 채우고 'AI 자동 설명서 생성' 버튼을 클릭해 주십시오.</div>
+                        </div>
+                        <div class="terminal-progress-bar" id="terminal-progress"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bullet Board Section -->
+            <div class="board-section-wrapper reveal active" style="margin-top: 80px;">
+                <div class="board-header-row">
+                    <div class="board-title-group">
+                        <i class="fas fa-clipboard-list" style="font-size: 1.8rem; color: var(--primary);"></i>
+                        <h2 style="font-size: 1.8rem; color: var(--primary-dark); font-weight: 700;">등록된 AI 설명 게시판</h2>
+                    </div>
+                    
+                    <!-- Search and Reset controls -->
+                    <div class="board-controls-group">
+                        <div class="search-box-wrapper" style="margin: 0;">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="board-search" placeholder="제목, 제품군, 키워드로 검색...">
+                        </div>
+                        <button class="btn-reset-db" id="btn-reset-ai-db" title="기본 데이터로 전체 리셋">
+                            <i class="fas fa-sync-alt"></i> DB 초기화
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Live Board Feed Grid -->
+                <div class="board-feed-grid" id="board-feed">
+                    <!-- Cards will be dynamically injected here by script.js -->
+                </div>
+
+                <!-- Empty State -->
+                <div class="table-no-results" id="board-empty-state" style="display: none; padding: 60px 20px; border-radius: 12px; background: rgba(255,255,255,0.7); box-shadow: 0 4px 30px rgba(0,0,0,0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3); text-align: center;">
+                    <i class="fas fa-folder-open" style="font-size: 3rem; color: #cbd5e1; margin-bottom: 15px;"></i>
+                    <p style="color: var(--text-muted); font-size: 1.1rem; font-weight: 500;">등록된 AI 설명서가 존재하지 않습니다.</p>
+                    <p style="color: #94a3b8; font-size: 0.95rem; margin-top: 5px;">위의 작성 폼을 채우고 직접 기술 설명을 등록하거나 AI 자동 생성을 실행해 보십시오.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3 class="logo">(주)비에이텍<span>.</span></h3>
+                    <p style="margin-bottom: 25px; color: #94a3b8;">워터펌프 제작, 설치, 수리 분야의<br>신뢰받는 파트너가 되겠습니다.</p>
+                    <div class="footer-info">
+                        <p><i class="fas fa-map-marker-alt"></i> 강원특별자치도 춘천시 퇴계공단2길 64</p>
+                        <p><i class="fas fa-phone"></i> 033-248-1111</p>
+                        <p><i class="fas fa-fax"></i> 033-248-1234</p>
+                        <p><i class="fas fa-envelope"></i> aaa@naver.com</p>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>바로가기</h4>
+                    <ul>
+                        <li><a href="intro.html">기업소개</a></li>
+                        <li><a href="product.html">주요제품</a></li>
+                        <li><a href="equipment.html">장비현황</a></li>
+                        <li><a href="records.html">주요사업실적</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>고객지원</h4>
+                    <ul>
+                        <li><a href="map.html">찾아오시는 길</a></li>
+                        <li><a href="inquiry.html">온라인 문의</a></li>
+                        <li><a href="equipment.html">유지보수 지침서</a></li>
+                        <li><a href="inquiry.html">A/S 접수</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 (주)비에이텍. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
