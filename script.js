@@ -472,4 +472,218 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // --- Inquiry & A/S Form Handling Engine ---
+    const inquiryForm = document.getElementById('inquiry-form');
+    const successView = document.getElementById('success-view');
+    const inquiryCard = document.getElementById('inquiry-card');
+
+    if (inquiryForm && successView) {
+        // Elements of form inputs
+        const nameInput = document.getElementById('inquiry-name');
+        const contactInput = document.getElementById('inquiry-contact');
+        const categoryInput = document.getElementById('inquiry-category');
+        const titleInput = document.getElementById('inquiry-title');
+        const contentInput = document.getElementById('inquiry-content');
+        const consentInput = document.getElementById('inquiry-consent');
+        const btnSubmit = document.getElementById('btn-submit');
+        const btnSpinner = document.getElementById('btn-spinner');
+
+        // Elements of receipt/success view
+        const receiptNo = document.getElementById('receipt-no');
+        const receiptName = document.getElementById('receipt-name');
+        const receiptCategory = document.getElementById('receipt-category');
+        const receiptTitle = document.getElementById('receipt-title');
+        const receiptDate = document.getElementById('receipt-date');
+        const btnResetForm = document.getElementById('btn-reset-form');
+
+        // Field Validation helpers
+        function validateField(inputElement, errorElementId) {
+            const errorElement = document.getElementById(errorElementId);
+            let isValid = true;
+
+            if (inputElement.type === 'checkbox') {
+                isValid = inputElement.checked;
+            } else {
+                isValid = inputElement.value.trim() !== '';
+            }
+
+            const formGroup = inputElement.closest('.form-group') || inputElement.closest('.form-group-checkbox');
+
+            if (!isValid) {
+                if (formGroup) formGroup.classList.add('has-error');
+                if (errorElement) errorElement.style.display = 'block';
+            } else {
+                if (formGroup) formGroup.classList.remove('has-error');
+                if (errorElement) errorElement.style.display = 'none';
+            }
+
+            return isValid;
+        }
+
+        // Real-time error clearance on input
+        const inputPairs = [
+            { input: nameInput, err: 'error-name' },
+            { input: contactInput, err: 'error-contact' },
+            { input: categoryInput, err: 'error-category' },
+            { input: titleInput, err: 'error-title' },
+            { input: contentInput, err: 'error-content' },
+            { input: consentInput, err: 'error-consent' }
+        ];
+
+        inputPairs.forEach(pair => {
+            if (pair.input) {
+                const eventType = pair.input.tagName === 'SELECT' || pair.input.type === 'checkbox' ? 'change' : 'input';
+                pair.input.addEventListener(eventType, () => {
+                    validateField(pair.input, pair.err);
+                });
+            }
+        });
+
+        // Form Submit Handler
+        inquiryForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Validate all fields
+            let isFormValid = true;
+            inputPairs.forEach(pair => {
+                if (pair.input) {
+                    const isFieldValid = validateField(pair.input, pair.err);
+                    if (!isFieldValid) {
+                        isFormValid = false;
+                    }
+                }
+            });
+
+            if (!isFormValid) {
+                // Focus on the first invalid field
+                const firstInvalid = inputPairs.find(pair => {
+                    if (pair.input.type === 'checkbox') return !pair.input.checked;
+                    return pair.input.value.trim() === '';
+                });
+                if (firstInvalid && firstInvalid.input) {
+                    firstInvalid.input.focus();
+                }
+                return;
+            }
+
+            // Show submitting spinner & disable submit button to prevent double clicks
+            if (btnSubmit) {
+                btnSubmit.disabled = true;
+                if (btnSpinner) btnSpinner.classList.add('active');
+            }
+
+            // Simulate server network request delay for premium UX feel
+            setTimeout(() => {
+                // Generate secure random ticket ID: BA-YYYYMMDD-XXXX (where XXXX is 4 random letters/numbers)
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const day = String(now.getDate()).padStart(2, '0');
+                const dateStr = `${year}${month}${day}`;
+                
+                const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                let randomStr = '';
+                for (let i = 0; i < 4; i++) {
+                    randomStr += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                const ticketId = `BA-${dateStr}-${randomStr}`;
+
+                // Gather submitted data
+                const submissionData = {
+                    ticketId: ticketId,
+                    name: nameInput.value.trim(),
+                    contact: contactInput.value.trim(),
+                    category: categoryInput.value,
+                    title: titleInput.value.trim(),
+                    content: contentInput.value.trim(),
+                    submittedAt: now.toLocaleString('ko-KR')
+                };
+
+                // Store silently in localStorage (100% private, not displayed anywhere on front-end)
+                try {
+                    const existingInquiries = JSON.parse(localStorage.getItem('batech_inquiries') || '[]');
+                    existingInquiries.push(submissionData);
+                    localStorage.setItem('batech_inquiries', JSON.stringify(existingInquiries));
+                    console.log('Inquiry registered successfully (Private Log):', submissionData);
+                } catch (err) {
+                    console.error('Failed to log inquiry in localStorage:', err);
+                }
+
+                // Populate success receipt elements
+                if (receiptNo) receiptNo.textContent = ticketId;
+                if (receiptName) receiptName.textContent = submissionData.name;
+                if (receiptCategory) {
+                    receiptCategory.innerHTML = `<span class="receipt-badge category-${getCategoryClass(submissionData.category)}">${submissionData.category}</span>`;
+                }
+                if (receiptTitle) receiptTitle.textContent = submissionData.title;
+                if (receiptDate) receiptDate.textContent = submissionData.submittedAt;
+
+                // Animate transition: fade out form, fade in success view
+                inquiryForm.style.opacity = '0';
+                setTimeout(() => {
+                    inquiryForm.style.display = 'none';
+                    successView.style.display = 'block';
+                    successView.offsetHeight; // force reflow
+                    successView.style.opacity = '1';
+                    successView.style.transform = 'translateY(0)';
+                    
+                    // Smoothly scroll to card top
+                    if (inquiryCard) {
+                        inquiryCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 300);
+
+            }, 1200); // 1.2s delay for professional spinner feedback
+        });
+
+        // Reset Form Handler
+        if (btnResetForm) {
+            btnResetForm.addEventListener('click', () => {
+                // Clear inputs
+                inquiryForm.reset();
+                
+                // Clear any lingering error classes and error text visibility
+                inputPairs.forEach(pair => {
+                    if (pair.input) {
+                        const formGroup = pair.input.closest('.form-group') || pair.input.closest('.form-group-checkbox');
+                        if (formGroup) formGroup.classList.remove('has-error');
+                        const errorElement = document.getElementById(pair.err);
+                        if (errorElement) errorElement.style.display = 'none';
+                    }
+                });
+
+                // Reset submit button state
+                if (btnSubmit) {
+                    btnSubmit.disabled = false;
+                    if (btnSpinner) btnSpinner.classList.remove('active');
+                }
+
+                // Animate transition: fade out success view, fade in form
+                successView.style.opacity = '0';
+                successView.style.transform = 'translateY(15px)';
+                setTimeout(() => {
+                    successView.style.display = 'none';
+                    inquiryForm.style.display = 'block';
+                    inquiryForm.offsetHeight; // force reflow
+                    inquiryForm.style.opacity = '1';
+                    
+                    if (inquiryCard) {
+                        inquiryCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 300);
+            });
+        }
+
+        // Helper to categorize inquiry types for CSS styling badges
+        function getCategoryClass(category) {
+            switch (category) {
+                case '사용 문제': return 'use-problem';
+                case '고장 및 수리': return 'repair';
+                case '일반 문의': return 'general';
+                case '기타': return 'etc';
+                default: return 'default';
+            }
+        }
+    }
 });

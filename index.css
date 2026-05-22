@@ -2273,6 +2273,472 @@ footer {
     }
 }
 
+/* --- Online Inquiry Form Styles (inquiry.html) --- */
+.inquiry-card-wrapper {
+    max-width: 850px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.inquiry-form-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 30px;
+    padding: 50px;
+    box-shadow: 0 20px 40px rgba(0, 4, 40, 0.08);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.inquiry-form-card:hover {
+    box-shadow: 0 30px 60px rgba(0, 78, 146, 0.12);
+}
+
+.form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-field-icon {
+    color: var(--secondary);
+    font-size: 1rem;
+}
+
+.required-star {
+    color: #ef4444;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea,
+.select-wrapper select {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 0.98rem;
+    color: var(--text-main);
+    background: white;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    border-radius: 12px;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: inherit;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.select-wrapper select:focus {
+    border-color: var(--primary);
+    background: white;
+    box-shadow: 0 0 0 4px rgba(0, 78, 146, 0.12);
+}
+
+/* Custom Select Dropdown Wrapper */
+.select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.select-wrapper select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 45px;
+    cursor: pointer;
+}
+
+.select-arrow-icon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+    font-size: 0.9rem;
+    transition: transform 0.3s ease;
+}
+
+.select-wrapper select:focus + .select-arrow-icon {
+    transform: translateY(-50%) rotate(180deg);
+    color: var(--primary);
+}
+
+/* Checkbox Style */
+.form-group-checkbox {
+    margin: 25px 0;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-left: 32px;
+    cursor: pointer;
+    font-size: 0.92rem;
+    color: var(--text-main);
+    user-select: none;
+    line-height: 1.5;
+}
+
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 20px;
+    width: 20px;
+    background-color: white;
+    border: 2px solid #cbd5e1;
+    border-radius: 6px;
+    transition: all 0.25s ease;
+}
+
+.checkbox-container:hover input ~ .checkmark {
+    border-color: var(--primary);
+}
+
+.checkbox-container input:checked ~ .checkmark {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.checkbox-container .checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Submit Button */
+.btn-submit-inquiry {
+    width: 100%;
+    padding: 16px 30px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: white;
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 20px rgba(0, 210, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-submit-inquiry:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(0, 210, 255, 0.3);
+}
+
+.btn-submit-inquiry:active {
+    transform: translateY(-1px);
+}
+
+/* Error states */
+.form-group.has-error input,
+.form-group.has-error textarea,
+.form-group.has-error .select-wrapper select {
+    border-color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.02);
+}
+
+.form-group.has-error input:focus,
+.form-group.has-error textarea:focus,
+.form-group.has-error .select-wrapper select:focus {
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+}
+
+.form-error-msg {
+    color: #ef4444;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-top: 6px;
+    display: none;
+}
+
+/* Spinner */
+.btn-spinner {
+    display: none;
+    width: 22px;
+    height: 22px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.8s ease-in-out infinite;
+}
+
+/* Success View Styles */
+.inquiry-success-view {
+    text-align: center;
+    padding: 20px 0;
+    animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.success-icon-wrapper {
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+}
+
+.success-checkmark-circle {
+    width: 80px;
+    height: 80px;
+    background: rgba(16, 185, 129, 0.1);
+    border: 3px solid #10b981;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    color: #10b981;
+    animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.6);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.success-title {
+    font-size: 1.8rem;
+    color: var(--primary-dark);
+    margin-bottom: 12px;
+    font-weight: 800;
+}
+
+.success-lead {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    margin-bottom: 35px;
+}
+
+/* Receipt design card */
+.receipt-card {
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 18px;
+    padding: 25px 30px;
+    max-width: 550px;
+    margin: 0 auto 35px;
+    text-align: left;
+    position: relative;
+}
+
+.receipt-header {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--primary);
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 12px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.receipt-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.receipt-table th {
+    text-align: left;
+    width: 110px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding: 8px 0;
+}
+
+.receipt-table td {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--primary-dark);
+    padding: 8px 0;
+}
+
+.receipt-highlight {
+    font-family: 'Outfit', sans-serif;
+    color: var(--secondary) !important;
+    font-size: 1.05rem !important;
+    letter-spacing: 0.5px;
+}
+
+.receipt-badge {
+    background: rgba(0, 78, 146, 0.08);
+    color: var(--primary);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+}
+
+.success-info-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: rgba(0, 78, 146, 0.03);
+    border-left: 4px solid var(--primary);
+    border-radius: 0 12px 12px 0;
+    padding: 18px 24px;
+    max-width: 650px;
+    margin: 0 auto 35px;
+    text-align: left;
+}
+
+.success-info-box .info-icon {
+    font-size: 1.25rem;
+    color: var(--primary);
+    margin-top: 3px;
+}
+
+.success-info-box span {
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.6;
+}
+
+.success-action-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.btn-success-home {
+    padding: 14px 28px;
+    background: var(--primary-dark);
+    color: white;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.98rem;
+    text-decoration: none;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-success-home:hover {
+    background: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    color: white;
+}
+
+.btn-success-reset {
+    padding: 14px 28px;
+    background: white;
+    color: var(--text-main);
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.98rem;
+    cursor: pointer;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-success-reset:hover {
+    border-color: var(--secondary);
+    color: var(--primary);
+    transform: translateY(-2px);
+}
+
+/* Responsive Inquiry Card */
+@media (max-width: 768px) {
+    .inquiry-form-card {
+        padding: 30px 20px;
+    }
+    
+    .form-grid-2 {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    
+    .receipt-card {
+        padding: 15px 20px;
+    }
+    
+    .success-action-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .btn-success-home, .btn-success-reset {
+        justify-content: center;
+    }
+}
+
+
 
 
 
