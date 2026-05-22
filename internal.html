@@ -31,8 +31,8 @@
     <section class="sub-hero">
         <div class="sub-hero-overlay"></div>
         <div class="container sub-hero-content">
-            <h1 class="reveal active">내부인용 AI 설명 게시판</h1>
-            <p class="reveal active">정량펌프 제품군에 대한 정밀 진단, 고장 증상별 조치법 및 원리에 대하여 AI 기술 설명서를 작성하고 축적하는 지식 베이스 공간입니다.</p>
+            <h1 class="reveal active">내부 임직원용 AI & 개발 지식 아카이브</h1>
+            <p class="reveal active">비에이텍 임직원들의 실무 역량 강화를 위한 생성형 AI 실무 활용 및 웹사이트 개발 핵심 교육 자료실입니다. 고해상도 온라인 뷰어와 다운로드를 지원합니다.</p>
         </div>
     </section>
 
@@ -42,133 +42,176 @@
             
             <!-- Section Header -->
             <div class="product-intro reveal active" style="margin-bottom: 50px; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">
-                <h2 style="font-size: 2.2rem; color: var(--primary-dark); margin-bottom: 20px; font-weight: 700;">AI 기술 설명서 작성 및 조회</h2>
+                <h2 style="font-size: 2.2rem; color: var(--primary-dark); margin-bottom: 20px; font-weight: 700;">비에이텍 사내 교육 자료실</h2>
                 <div class="divider" style="width: 80px; height: 5px; background: var(--secondary); margin: 0 auto 20px; border-radius: 10px;"></div>
                 <p style="color: var(--text-main); font-size: 1.12rem; line-height: 1.8;">
-                    수정이 필요한 펌프 모델과 고장 키워드를 입력하고 <strong style="color: var(--primary); font-weight: 700;">"AI 자동 설명서 생성"</strong>을 실행해 보세요. 비에이텍 전문 엔지니어링 지식을 학습한 가상 AI 비서가 완벽한 해결책을 자동으로 작성해 줍니다. 직접 내용을 작성하여 일반 게시글로도 즉시 등록할 수 있습니다.
+                    사내 임직원 교육용으로 배포된 생성형 AI 가이드, 프롬프트 엔지니어링, 데이터 분석 및 웹 구축 실무 교육 문서를 고해상도로 상시 조회할 수 있습니다. 각 문서를 다운로드하여 개인 컴퓨터에서 영구 소장 및 검토도 가능합니다.
                 </p>
             </div>
 
-            <!-- Two-Column Workspace Layout -->
-            <div class="internal-workspace-grid">
+            <!-- Two-Column Interactive Workspace Layout -->
+            <div class="internal-doc-layout">
                 
-                <!-- Left: AI Explanation Writer Form -->
-                <div class="reveal active">
-                    <div class="internal-card card-glow">
-                        <div class="card-header-with-icon">
-                            <i class="fas fa-robot card-header-icon" style="color: var(--secondary);"></i>
-                            <h3>AI 설명서 신규 작성기</h3>
-                        </div>
-                        <form id="ai-form" novalidate style="margin-top: 20px;">
-                            
-                            <!-- Select: Target Product -->
-                            <div class="form-group">
-                                <label for="ai-product"><i class="fas fa-cogs form-field-icon"></i> 대상 제품군 <span class="required-star">*</span></label>
-                                <div class="select-wrapper">
-                                    <select id="ai-product" required>
-                                        <option value="" disabled selected hidden>대상 제품군을 선택해 주세요</option>
-                                        <option value="PKD 시리즈">PKD 시리즈 (무맥동 고정밀 정량펌프)</option>
-                                        <option value="수중볼텍스펌프">수중볼텍스펌프 (하수처리/슬러지 이송)</option>
-                                        <option value="부스터펌프">부스터펌프 (가압 급수 시스템)</option>
-                                        <option value="심정펌프">심정펌프 (심정용 지하수 취수)</option>
-                                        <option value="송수/진공펌프">송수 및 진공펌프 (농업/산업 용수)</option>
-                                        <option value="기타">기타 / 부가 장비</option>
-                                    </select>
-                                    <i class="fas fa-chevron-down select-arrow-icon"></i>
+                <!-- Left: Document List Sidebar -->
+                <div class="doc-list-sidebar reveal active">
+                    <!-- Document Card 1 -->
+                    <div class="doc-card active" data-doc-id="web-build">
+                        <div class="doc-card-header">
+                            <div class="doc-icon-wrapper">
+                                <i class="fas fa-laptop-code"></i>
+                            </div>
+                            <div class="doc-info">
+                                <h3 class="doc-title">웹사이트 구축 자료</h3>
+                                <div class="doc-meta-row">
+                                    <span class="doc-badge pdf">PDF</span>
+                                    <span class="doc-badge size">1.38 MB</span>
+                                    <span class="doc-badge tag">웹 개발</span>
                                 </div>
-                                <div class="form-error-msg" id="error-ai-product">대상 제품군을 선택해 주세요.</div>
                             </div>
+                        </div>
+                        <p class="doc-description">생성형 AI 환경에서 프론트엔드와 백엔드 기초를 이해하고 웹사이트를 효과적으로 기획 및 구축하는 과정을 총망라한 실무서입니다.</p>
+                        <div class="doc-actions-row">
+                            <button class="btn-doc-action view"><i class="fas fa-eye"></i> 바로보기</button>
+                            <a href="./웹사이트 구축 자료.pdf" class="btn-doc-action download" download><i class="fas fa-download"></i> 다운로드</a>
+                        </div>
+                    </div>
 
-                            <!-- Input: Explanation Title -->
-                            <div class="form-group">
-                                <label for="ai-title"><i class="fas fa-file-signature form-field-icon"></i> 설명서 제목 <span class="required-star">*</span></label>
-                                <input type="text" id="ai-title" placeholder="예: PKD-200 모델 등속도 캠 교환 및 유량 오차 보정 안내" required>
-                                <div class="form-error-msg" id="error-ai-title">설명서 제목을 입력해 주세요.</div>
+                    <!-- Document Card 2 -->
+                    <div class="doc-card" data-doc-id="prompt-guide">
+                        <div class="doc-card-header">
+                            <div class="doc-icon-wrapper">
+                                <i class="fas fa-terminal"></i>
                             </div>
-
-                            <!-- Input: Key Technical Keywords -->
-                            <div class="form-group">
-                                <label for="ai-keywords"><i class="fas fa-tags form-field-icon"></i> 핵심 기술 키워드 / 주요 고장증상 <span class="required-star">*</span></label>
-                                <input type="text" id="ai-keywords" placeholder="예: 맥동 현상, 소음 발생, 저유량, 유량 오차, 씰 손상" required>
-                                <div class="form-error-msg" id="error-ai-keywords">기술 키워드나 증상을 1개 이상 쉼표로 구분해 입력해 주세요.</div>
+                            <div class="doc-info">
+                                <h3 class="doc-title">Prompt작성가이드 자료</h3>
+                                <div class="doc-meta-row">
+                                    <span class="doc-badge pdf">PDF</span>
+                                    <span class="doc-badge size">193 KB</span>
+                                    <span class="doc-badge tag">프롬프트</span>
+                                </div>
                             </div>
+                        </div>
+                        <p class="doc-description">생성형 AI의 답변 품질을 비약적으로 높일 수 있는 체계적인 프롬프트 엔지니어링 기법과 비즈니스 실무 활용 팁을 제시합니다.</p>
+                        <div class="doc-actions-row">
+                            <button class="btn-doc-action view"><i class="fas fa-eye"></i> 바로보기</button>
+                            <a href="./Prompt작성가이드 자료.pdf" class="btn-doc-action download" download><i class="fas fa-download"></i> 다운로드</a>
+                        </div>
+                    </div>
 
-                            <!-- Input: Main Technical Explanation -->
-                            <div class="form-group">
-                                <label for="ai-content"><i class="fas fa-keyboard form-field-icon"></i> 기술 설명서 본문 <span class="required-star">*</span></label>
-                                <textarea id="ai-content" rows="10" placeholder="AI 자동 생성 버튼을 통해 내용을 실시간으로 채우거나, 직접 원인 분석 및 정비 지침을 작성해 주세요." required></textarea>
-                                <div class="form-error-msg" id="error-ai-content">내용을 입력하거나 AI 자동 생성을 실행해 주세요.</div>
+                    <!-- Document Card 3 -->
+                    <div class="doc-card" data-doc-id="data-analysis">
+                        <div class="doc-card-header">
+                            <div class="doc-icon-wrapper">
+                                <i class="fas fa-chart-line"></i>
                             </div>
-
-                            <!-- Actions Row -->
-                            <div class="ai-action-buttons" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px;">
-                                <button type="button" class="btn-ai-generate" id="btn-ai-generate">
-                                    <i class="fas fa-wand-magic-sparkles animate-pulse"></i> AI 자동 설명서 생성
-                                </button>
-                                <button type="submit" class="btn-ai-submit" id="btn-ai-submit">
-                                    <i class="fas fa-plus-circle"></i> 게시판에 등록하기
-                                </button>
+                            <div class="doc-info">
+                                <h3 class="doc-title">GenAI를 활용한 데이터 분석 자료</h3>
+                                <div class="doc-meta-row">
+                                    <span class="doc-badge pdf">PDF</span>
+                                    <span class="doc-badge size">232 KB</span>
+                                    <span class="doc-badge tag">데이터 분석</span>
+                                </div>
                             </div>
+                        </div>
+                        <p class="doc-description">생성형 AI 도구를 접목하여 데이터 정제, 탐색적 데이터 분석(EDA), 대시보드 시각화 등 데이터 인텔리전스를 실현하는 실용서입니다.</p>
+                        <div class="doc-actions-row">
+                            <button class="btn-doc-action view"><i class="fas fa-eye"></i> 바로보기</button>
+                            <a href="./GenAI를 활용한 데이터 분석 자료.pdf" class="btn-doc-action download" download><i class="fas fa-download"></i> 다운로드</a>
+                        </div>
+                    </div>
 
-                        </form>
+                    <!-- Document Card 4 -->
+                    <div class="doc-card" data-doc-id="presentation-ai">
+                        <div class="doc-card-header">
+                            <div class="doc-icon-wrapper">
+                                <i class="fas fa-file-powerpoint"></i>
+                            </div>
+                            <div class="doc-info">
+                                <h3 class="doc-title">발표자료 생성 AI 자료</h3>
+                                <div class="doc-meta-row">
+                                    <span class="doc-badge pdf">PDF</span>
+                                    <span class="doc-badge size">2.77 MB</span>
+                                    <span class="doc-badge tag">발표자료 AI</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="doc-description">Gamma, Beautiful.ai 등 프레젠테이션 자동 생성 AI 도구의 특성과 실무 보고서 및 발표 자료의 신속한 제작 노하우를 담고 있습니다.</p>
+                        <div class="doc-actions-row">
+                            <button class="btn-doc-action view"><i class="fas fa-eye"></i> 바로보기</button>
+                            <a href="./발표자료 생성 AI 자료.pdf" class="btn-doc-action download" download><i class="fas fa-download"></i> 다운로드</a>
+                        </div>
+                    </div>
+
+                    <!-- Document Card 5 -->
+                    <div class="doc-card" data-doc-id="gems-cardnews">
+                        <div class="doc-card-header">
+                            <div class="doc-icon-wrapper">
+                                <i class="fas fa-images"></i>
+                            </div>
+                            <div class="doc-info">
+                                <h3 class="doc-title">GEMS 가이드와 카드뉴스 제작 자료</h3>
+                                <div class="doc-meta-row">
+                                    <span class="doc-badge pdf">PDF</span>
+                                    <span class="doc-badge size">444 KB</span>
+                                    <span class="doc-badge tag">카드뉴스</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="doc-description">비에이텍 고유의 브랜드 강점을 살린 홍보용 카드뉴스 및 소셜 콘텐츠를 생성형 AI와 캔바(Canva)를 활용하여 쉽고 빠르게 기획·제작하는 가이드입니다.</p>
+                        <div class="doc-actions-row">
+                            <button class="btn-doc-action view"><i class="fas fa-eye"></i> 바로보기</button>
+                            <a href="./GEMS 가이드와 카드뉴스 제작 자료.pdf" class="btn-doc-action download" download><i class="fas fa-download"></i> 다운로드</a>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Right: AI Live Streaming Console Terminal -->
+                <!-- Right: Premium PDF Document Viewer -->
                 <div class="reveal active">
-                    <div class="ai-terminal-card">
-                        <div class="terminal-header">
-                            <div class="terminal-dots">
-                                <span class="dot red"></span>
-                                <span class="dot yellow"></span>
-                                <span class="dot green"></span>
+                    <div class="premium-viewer-card">
+                        <div class="viewer-top-toolbar">
+                            <div class="viewer-controls">
+                                <i class="fas fa-file-pdf text-red-500" style="color: #ef4444; font-size: 1.25rem;"></i>
+                                <span class="viewer-doc-title" id="viewer-title">웹사이트 구축 자료.pdf</span>
                             </div>
-                            <span class="terminal-title"><i class="fas fa-terminal"></i> BATECH AI-ENGINE v2.6.2</span>
-                            <span class="terminal-status" id="terminal-status">READY</span>
+                            
+                            <!-- Viewer Interactive Controllers -->
+                            <div class="viewer-controls">
+                                <!-- Zoom Controls -->
+                                <button class="btn-viewer-control" id="btn-zoom-out" title="축소"><i class="fas fa-search-minus"></i></button>
+                                <span class="viewer-zoom-indicator" id="viewer-zoom-percent">120%</span>
+                                <button class="btn-viewer-control" id="btn-zoom-in" title="확대"><i class="fas fa-search-plus"></i></button>
+                                
+                                <span style="color: rgba(255,255,255,0.15); margin: 0 4px;">|</span>
+
+                                <!-- Navigation Controls -->
+                                <button class="btn-viewer-control" id="btn-prev-page" title="이전 페이지"><i class="fas fa-chevron-left"></i></button>
+                                <div class="viewer-page-indicator">
+                                    <span id="viewer-current-page">1</span> / <span id="viewer-total-pages">-</span>
+                                </div>
+                                <button class="btn-viewer-control" id="btn-next-page" title="다음 페이지"><i class="fas fa-chevron-right"></i></button>
+                                
+                                <span style="color: rgba(255,255,255,0.15); margin: 0 4px;">|</span>
+
+                                <!-- Action Buttons -->
+                                <a id="btn-viewer-download" href="./웹사이트 구축 자료.pdf" class="btn-viewer-download" download><i class="fas fa-download"></i> 다운로드</a>
+                            </div>
                         </div>
-                        <div class="terminal-body" id="terminal-body">
-                            <div class="terminal-line"><span class="prompt">$</span> BATECH-AI-ENGINE 정밀 엔지니어링 데이터 초기화 완료.</div>
-                            <div class="terminal-line"><span class="prompt">$</span> 대기 중... 대상 제품과 키워드를 채우고 'AI 자동 설명서 생성' 버튼을 클릭해 주십시오.</div>
+
+                        <!-- Render Canvas Viewport -->
+                        <div class="viewer-viewport-pane" id="viewer-viewport">
+                            <canvas id="pdf-canvas" class="pdf-render-canvas"></canvas>
+                            
+                            <!-- Loading & Error Overlays -->
+                            <div class="viewer-loading-screen" id="viewer-loading" style="display: none;">
+                                <div class="viewer-loading-spinner"></div>
+                                <div class="viewer-loading-text" id="viewer-loading-message">문서를 분석하고 렌더링을 시작합니다...</div>
+                            </div>
                         </div>
-                        <div class="terminal-progress-bar" id="terminal-progress"></div>
                     </div>
                 </div>
 
             </div>
-
-            <!-- Bullet Board Section -->
-            <div class="board-section-wrapper reveal active" style="margin-top: 80px;">
-                <div class="board-header-row">
-                    <div class="board-title-group">
-                        <i class="fas fa-clipboard-list" style="font-size: 1.8rem; color: var(--primary);"></i>
-                        <h2 style="font-size: 1.8rem; color: var(--primary-dark); font-weight: 700;">등록된 AI 설명 게시판</h2>
-                    </div>
-                    
-                    <!-- Search and Reset controls -->
-                    <div class="board-controls-group">
-                        <div class="search-box-wrapper" style="margin: 0;">
-                            <i class="fas fa-search search-icon"></i>
-                            <input type="text" id="board-search" placeholder="제목, 제품군, 키워드로 검색...">
-                        </div>
-                        <button class="btn-reset-db" id="btn-reset-ai-db" title="기본 데이터로 전체 리셋">
-                            <i class="fas fa-sync-alt"></i> DB 초기화
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Live Board Feed Grid -->
-                <div class="board-feed-grid" id="board-feed">
-                    <!-- Cards will be dynamically injected here by script.js -->
-                </div>
-
-                <!-- Empty State -->
-                <div class="table-no-results" id="board-empty-state" style="display: none; padding: 60px 20px; border-radius: 12px; background: rgba(255,255,255,0.7); box-shadow: 0 4px 30px rgba(0,0,0,0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3); text-align: center;">
-                    <i class="fas fa-folder-open" style="font-size: 3rem; color: #cbd5e1; margin-bottom: 15px;"></i>
-                    <p style="color: var(--text-muted); font-size: 1.1rem; font-weight: 500;">등록된 AI 설명서가 존재하지 않습니다.</p>
-                    <p style="color: #94a3b8; font-size: 0.95rem; margin-top: 5px;">위의 작성 폼을 채우고 직접 기술 설명을 등록하거나 AI 자동 생성을 실행해 보십시오.</p>
-                </div>
-            </div>
-
+            
         </div>
     </section>
 
@@ -211,6 +254,11 @@
         </div>
     </footer>
 
+    <!-- pdf.js Library CDN & Worker Config -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
