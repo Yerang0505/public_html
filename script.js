@@ -616,28 +616,53 @@ document.addEventListener('DOMContentLoaded', () => {
                 "제목": titleInput.value.trim(),
                 "내용": contentInput.value.trim(),
                 "접수 일시": now.toLocaleString('ko-KR'),
-                _cc: "aaa@naver.com" // 회사 대표 이메일로도 참조 전송
+                _replyto: email, // 이메일 답장 시 문의자에게 바로 답장 가능하도록 설정
+                _cc: email // 문의 신청자 이메일로도 사본 전송
             };
 
-            // Send Inquiry details via FormSubmit API to the user's email
-            fetch(`https://formsubmit.co/ajax/${email}`, {
+            // 1. Send Inquiry details via FormSubmit API to cilly03@naver.com (site owner)
+            const emailPromise = fetch("https://formsubmit.co/ajax/cilly03@naver.com", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
                 body: JSON.stringify(formData)
-            })
-            .then(async (res) => {
-                const data = await res.json();
-                if (res.status === 200) {
-                    console.log('이메일 전송 성공:', data);
+            });
+
+            // 2. Send Inquiry details to Netlify Forms (if deployed on Netlify)
+            const netlifyParams = new URLSearchParams();
+            netlifyParams.append("form-name", "contact_company");
+            netlifyParams.append("client_name", nameInput.value.trim());
+            netlifyParams.append("client_email", email);
+            netlifyParams.append("category", categoryInput.value);
+            netlifyParams.append("title", titleInput.value.trim());
+            netlifyParams.append("client_message", contentInput.value.trim());
+            netlifyParams.append("consent", consentInput.checked ? "on" : "off");
+
+            const netlifyPromise = fetch("/", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: netlifyParams.toString()
+            });
+
+            // Wait for both submissions (FormSubmit & Netlify Forms) to finish
+            Promise.allSettled([emailPromise, netlifyPromise])
+            .then((results) => {
+                const emailResult = results[0];
+                if (emailResult.status === 'fulfilled' && emailResult.value.ok) {
+                    console.log('이메일 전송 성공');
                 } else {
-                    console.warn('이메일 전송 실패 (네트워크 상태 또는 FormSubmit 설정을 확인하세요):', data);
+                    console.warn('이메일 전송 실패 (네트워크 상태 또는 FormSubmit 설정을 확인하세요)');
+                }
+                
+                const netlifyResult = results[1];
+                if (netlifyResult.status === 'fulfilled' && netlifyResult.value.ok) {
+                    console.log('Netlify Forms 전송 완료');
                 }
             })
             .catch(err => {
-                console.error('이메일 전송 중 에러 발생:', err);
+                console.error('전송 중 에러 발생:', err);
             })
             .finally(() => {
                 // Store silently in localStorage (100% private, not displayed anywhere on front-end)

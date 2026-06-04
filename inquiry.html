@@ -54,20 +54,21 @@
                 <div class="inquiry-form-card" id="inquiry-card">
                     
                     <!-- Core Form Content -->
-                    <form id="inquiry-form" novalidate>
+                    <form id="inquiry-form" name="contact_company" method="POST" data-netlify="true" novalidate>
+                        <input type="hidden" name="form-name" value="contact_company" />
                         
                         <div class="form-grid-2">
                             <!-- Input: Author Name -->
                             <div class="form-group">
                                 <label for="inquiry-name"><i class="fas fa-user form-field-icon"></i> 작성자 / 회사명 <span class="required-star">*</span></label>
-                                <input type="text" id="inquiry-name" placeholder="성함 또는 기업명을 입력하세요" required>
+                                <input type="text" id="inquiry-name" name="client_name" placeholder="성함 또는 기업명을 입력하세요" required>
                                 <div class="form-error-msg" id="error-name">작성자를 입력해 주세요.</div>
                             </div>
                             
                             <!-- Input: Contact Email -->
                             <div class="form-group">
                                 <label for="inquiry-email"><i class="fas fa-envelope form-field-icon"></i> 이메일 <span class="required-star">*</span></label>
-                                <input type="email" id="inquiry-email" placeholder="답변을 받으실 이메일 주소" required>
+                                <input type="email" id="inquiry-email" name="client_email" placeholder="답변을 받으실 이메일 주소" required>
                                 <div class="form-error-msg" id="error-email">이메일 주소를 올바르게 입력해 주세요.</div>
                             </div>
                         </div>
@@ -76,7 +77,7 @@
                         <div class="form-group">
                             <label for="inquiry-category"><i class="fas fa-tasks form-field-icon"></i> 문의건 (문의 유형) <span class="required-star">*</span></label>
                             <div class="select-wrapper">
-                                <select id="inquiry-category" required>
+                                <select id="inquiry-category" name="category" required>
                                     <option value="" disabled selected hidden>문의 유형을 선택하세요</option>
                                     <option value="사용 문제">사용 문제 (제품 조작, 사용 방법 관련)</option>
                                     <option value="고장 및 수리">고장 및 수리 (A/S 정비, 이상 현상 수선)</option>
@@ -91,21 +92,21 @@
                         <!-- Input: Inquiry Title -->
                         <div class="form-group">
                             <label for="inquiry-title"><i class="fas fa-heading form-field-icon"></i> 제목 <span class="required-star">*</span></label>
-                            <input type="text" id="inquiry-title" placeholder="문의 제목을 입력해 주세요" required>
+                            <input type="text" id="inquiry-title" name="title" placeholder="문의 제목을 입력해 주세요" required>
                             <div class="form-error-msg" id="error-title">제목을 입력해 주세요.</div>
                         </div>
 
                         <!-- Input: Inquiry Content -->
                         <div class="form-group">
                             <label for="inquiry-content"><i class="fas fa-edit form-field-icon"></i> 내용 <span class="required-star">*</span></label>
-                            <textarea id="inquiry-content" rows="8" placeholder="펌프 모델명, 이상 증상 또는 문의 사항을 구체적으로 기재해 주시면 신속한 대응에 큰 도움이 됩니다." required></textarea>
+                            <textarea id="inquiry-content" name="client_message" rows="8" placeholder="펌프 모델명, 이상 증상 또는 문의 사항을 구체적으로 기재해 주시면 신속한 대응에 큰 도움이 됩니다." required></textarea>
                             <div class="form-error-msg" id="error-content">내용을 입력해 주세요.</div>
                         </div>
 
                         <!-- Input: Privacy Policy Consent -->
                         <div class="form-group-checkbox">
                             <label class="checkbox-container">
-                                <input type="checkbox" id="inquiry-consent" checked required>
+                                <input type="checkbox" id="inquiry-consent" name="consent" checked required>
                                 <span class="checkmark"></span>
                                 <span class="checkbox-label">개인정보 수집 및 이용약관에 동의합니다. (비공개 처리 및 본인 답변 안내용)</span>
                             </label>
@@ -186,7 +187,7 @@
                         <p><i class="fas fa-map-marker-alt"></i> 강원특별자치도 춘천시 퇴계공단2길 64</p>
                         <p><i class="fas fa-phone"></i> 033-264-9243</p>
                         <p><i class="fas fa-fax"></i> 033-251-5747</p>
-                        <p><i class="fas fa-envelope"></i> aaa@naver.com</p>
+                        <p><i class="fas fa-envelope"></i> cilly03@naver.com</p>
                     </div>
                 </div>
                 <div class="footer-links">
@@ -217,3 +218,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
