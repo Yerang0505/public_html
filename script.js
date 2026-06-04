@@ -474,6 +474,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Inquiry & A/S Form Handling Engine ---
+    // Web3Forms API Access Key (https://web3forms.com에서 무료 발급 가능)
+    const WEB3FORMS_ACCESS_KEY = 'YOUR_ACCESS_KEY_HERE';
+
     const inquiryForm = document.getElementById('inquiry-form');
     const successView = document.getElementById('success-view');
     const inquiryCard = document.getElementById('inquiry-card');
@@ -481,7 +484,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (inquiryForm && successView) {
         // Elements of form inputs
         const nameInput = document.getElementById('inquiry-name');
-        const contactInput = document.getElementById('inquiry-contact');
+        const emailInput = document.getElementById('inquiry-email');
         const categoryInput = document.getElementById('inquiry-category');
         const titleInput = document.getElementById('inquiry-title');
         const contentInput = document.getElementById('inquiry-content');
@@ -504,6 +507,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (inputElement.type === 'checkbox') {
                 isValid = inputElement.checked;
+            } else if (inputElement.type === 'email') {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                isValid = emailRegex.test(inputElement.value.trim());
             } else {
                 isValid = inputElement.value.trim() !== '';
             }
@@ -524,7 +530,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Real-time error clearance on input
         const inputPairs = [
             { input: nameInput, err: 'error-name' },
-            { input: contactInput, err: 'error-contact' },
+            { input: emailInput, err: 'error-email' },
             { input: categoryInput, err: 'error-category' },
             { input: titleInput, err: 'error-title' },
             { input: contentInput, err: 'error-content' },
@@ -559,6 +565,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Focus on the first invalid field
                 const firstInvalid = inputPairs.find(pair => {
                     if (pair.input.type === 'checkbox') return !pair.input.checked;
+                    if (pair.input.type === 'email') {
+                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        return !emailRegex.test(pair.input.value.trim());
+                    }
                     return pair.input.value.trim() === '';
                 });
                 if (firstInvalid && firstInvalid.input) {
@@ -573,33 +583,61 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (btnSpinner) btnSpinner.classList.add('active');
             }
 
-            // Simulate server network request delay for premium UX feel
-            setTimeout(() => {
-                // Generate secure random ticket ID: BA-YYYYMMDD-XXXX (where XXXX is 4 random letters/numbers)
-                const now = new Date();
-                const year = now.getFullYear();
-                const month = String(now.getMonth() + 1).padStart(2, '0');
-                const day = String(now.getDate()).padStart(2, '0');
-                const dateStr = `${year}${month}${day}`;
-                
-                const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                let randomStr = '';
-                for (let i = 0; i < 4; i++) {
-                    randomStr += chars.charAt(Math.floor(Math.random() * chars.length));
+            // Generate secure random ticket ID: BA-YYYYMMDD-XXXX (where XXXX is 4 random letters/numbers)
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const dateStr = `${year}${month}${day}`;
+            
+            const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            let randomStr = '';
+            for (let i = 0; i < 4; i++) {
+                randomStr += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            const ticketId = `BA-${dateStr}-${randomStr}`;
+
+            // Gather submitted data
+            const submissionData = {
+                ticketId: ticketId,
+                name: nameInput.value.trim(),
+                email: emailInput.value.trim(),
+                category: categoryInput.value,
+                title: titleInput.value.trim(),
+                content: contentInput.value.trim(),
+                submittedAt: now.toLocaleString('ko-KR')
+            };
+
+            // Web3Forms API Data
+            const formData = {
+                access_key: WEB3FORMS_ACCESS_KEY,
+                name: nameInput.value.trim(),
+                email: emailInput.value.trim(),
+                subject: `[비에이텍 문의] ${categoryInput.value} - ${titleInput.value.trim()}`,
+                message: `접수번호: ${ticketId}\n작성자/회사명: ${nameInput.value.trim()}\n이메일: ${emailInput.value.trim()}\n문의유형: ${categoryInput.value}\n작성일시: ${now.toLocaleString('ko-KR')}\n\n[문의내용]\n${contentInput.value.trim()}`
+            };
+
+            // Send Inquiry details via Web3Forms API
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(async (res) => {
+                const data = await res.json();
+                if (res.status === 200) {
+                    console.log('이메일 전송 성공:', data);
+                } else {
+                    console.warn('이메일 전송 실패 (웹서브미션 API 에러. API 키 또는 네트워크 상태를 확인하세요):', data);
                 }
-                const ticketId = `BA-${dateStr}-${randomStr}`;
-
-                // Gather submitted data
-                const submissionData = {
-                    ticketId: ticketId,
-                    name: nameInput.value.trim(),
-                    contact: contactInput.value.trim(),
-                    category: categoryInput.value,
-                    title: titleInput.value.trim(),
-                    content: contentInput.value.trim(),
-                    submittedAt: now.toLocaleString('ko-KR')
-                };
-
+            })
+            .catch(err => {
+                console.error('이메일 전송 에러:', err);
+            })
+            .finally(() => {
                 // Store silently in localStorage (100% private, not displayed anywhere on front-end)
                 try {
                     const existingInquiries = JSON.parse(localStorage.getItem('batech_inquiries') || '[]');
@@ -633,8 +671,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         inquiryCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }
                 }, 300);
-
-            }, 1200); // 1.2s delay for professional spinner feedback
+            });
         });
 
         // Reset Form Handler
