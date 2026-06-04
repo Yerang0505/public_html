@@ -474,9 +474,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Inquiry & A/S Form Handling Engine ---
-    // Web3Forms API Access Key (https://web3forms.com에서 무료 발급 가능)
-    const WEB3FORMS_ACCESS_KEY = 'YOUR_ACCESS_KEY_HERE';
-
     const inquiryForm = document.getElementById('inquiry-form');
     const successView = document.getElementById('success-view');
     const inquiryCard = document.getElementById('inquiry-card');
@@ -608,17 +605,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 submittedAt: now.toLocaleString('ko-KR')
             };
 
-            // Web3Forms API Data
+            // FormSubmit API Data (Zero-setup free email sending)
+            const email = emailInput.value.trim();
             const formData = {
-                access_key: WEB3FORMS_ACCESS_KEY,
-                name: nameInput.value.trim(),
-                email: emailInput.value.trim(),
-                subject: `[비에이텍 문의] ${categoryInput.value} - ${titleInput.value.trim()}`,
-                message: `접수번호: ${ticketId}\n작성자/회사명: ${nameInput.value.trim()}\n이메일: ${emailInput.value.trim()}\n문의유형: ${categoryInput.value}\n작성일시: ${now.toLocaleString('ko-KR')}\n\n[문의내용]\n${contentInput.value.trim()}`
+                _subject: `[비에이텍] 문의 접수 완료 (${categoryInput.value})`,
+                "접수 번호": ticketId,
+                "작성자 / 회사명": nameInput.value.trim(),
+                "이메일": email,
+                "문의 유형": categoryInput.value,
+                "제목": titleInput.value.trim(),
+                "내용": contentInput.value.trim(),
+                "접수 일시": now.toLocaleString('ko-KR'),
+                _cc: "aaa@naver.com" // 회사 대표 이메일로도 참조 전송
             };
 
-            // Send Inquiry details via Web3Forms API
-            fetch('https://api.web3forms.com/submit', {
+            // Send Inquiry details via FormSubmit API to the user's email
+            fetch(`https://formsubmit.co/ajax/${email}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -631,11 +633,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (res.status === 200) {
                     console.log('이메일 전송 성공:', data);
                 } else {
-                    console.warn('이메일 전송 실패 (웹서브미션 API 에러. API 키 또는 네트워크 상태를 확인하세요):', data);
+                    console.warn('이메일 전송 실패 (네트워크 상태 또는 FormSubmit 설정을 확인하세요):', data);
                 }
             })
             .catch(err => {
-                console.error('이메일 전송 에러:', err);
+                console.error('이메일 전송 중 에러 발생:', err);
             })
             .finally(() => {
                 // Store silently in localStorage (100% private, not displayed anywhere on front-end)
