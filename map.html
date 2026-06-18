@@ -195,9 +195,9 @@
     <!-- Map Initialization Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Latitude and Longitude for 춘천시 퇴계공단2길 64: [37.848529, 127.728033]
+            // Latitude and Longitude for 춘천시 퇴계공단2길 64: [37.854084, 127.742354]
             var map = L.map('map', {
-                center: [37.848529, 127.728033],
+                center: [37.854084, 127.742354],
                 zoom: 16,
                 scrollWheelZoom: false, // Prevents accidental page zooming on scroll
                 zoomControl: true
@@ -220,7 +220,7 @@
             });
 
             // Add marker and bind premium custom popup
-            var marker = L.marker([37.848529, 127.728033], { icon: customIcon }).addTo(map);
+            var marker = L.marker([37.854084, 127.742354], { icon: customIcon }).addTo(map);
             
             var popupContent = '<h4>(주)비에이텍</h4><p>강원특별자치도 춘천시 퇴계공단2길 64<br>무맥동 정량펌프 전문 제작·수리</p>';
             
