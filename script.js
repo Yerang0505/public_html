@@ -411,13 +411,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 lightboxCaption.textContent = captionText;
             }
             lightboxModal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // ?�배�??�크�?방�?
+        document.body.style.overflow = 'hidden'; // 뒷배경 스크롤 방지
         }
 
         function closeLightbox() {
             if (!lightboxModal) return;
             lightboxModal.classList.remove('active');
-            document.body.style.overflow = ''; // ?�배�??�크�?복원
+        document.body.style.overflow = ''; // 뒷배경 스크롤 복원
             setTimeout(() => {
                 if (lightboxImg) lightboxImg.src = '';
             }, 300);
@@ -604,15 +604,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const email = emailInput.value.trim();
             const formData = {
                 _subject: `[비에이텍] 문의 접수 완료 (${categoryInput.value})`,
-                "?�수 번호": ticketId,
-                "?�성??/ ?�사�?: nameInput.value.trim(),
-                "?�메??: email,
-                "문의 ?�형": categoryInput.value,
-                "?�목": titleInput.value.trim(),
-                "?�용": contentInput.value.trim(),
-                "?�수 ?�시": now.toLocaleString('ko-KR'),
-                _replyto: email, // ?�메???�장 ??문의?�에�?바로 ?�장 가?�하?�록 ?�정
-                _cc: email // 문의 ?�청???�메?�로???�본 ?�송
+                "접수 번호": ticketId,
+                "작성자 / 회사명": nameInput.value.trim(),
+                "이메일": email,
+                "문의 유형": categoryInput.value,
+                "제목": titleInput.value.trim(),
+                "내용": contentInput.value.trim(),
+                "접수 일시": now.toLocaleString('ko-KR'),
+                _replyto: email,
+                _cc: email,
             };
 
             // 1. Send Inquiry details via FormSubmit API to cilly03@naver.com (site owner)
@@ -648,16 +648,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (emailResult.status === 'fulfilled' && emailResult.value.ok) {
                     console.log('?�메???�송 ?�공');
                 } else {
-                    console.warn('?�메???�송 ?�패 (?�트?�크 ?�태 ?�는 FormSubmit ?�정???�인?�세??');
+                    console.warn('이메일 전송 실패 (네트워크 상태 또는 FormSubmit 설정을 확인하세요)');
                 }
                 
                 const netlifyResult = results[1];
                 if (netlifyResult.status === 'fulfilled' && netlifyResult.value.ok) {
-                    console.log('Netlify Forms ?�송 ?�료');
+                    console.log('Netlify Forms 전송 완료');
                 }
             })
             .catch(err => {
-                console.error('?�송 �??�러 발생:', err);
+                console.error('전송 중 에러 발생:', err);
             })
             .finally(() => {
                 // Store silently in localStorage (100% private, not displayed anywhere on front-end)
@@ -667,7 +667,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     localStorage.setItem('batech_inquiries', JSON.stringify(existingInquiries));
                     console.log('Inquiry registered successfully (Private Log):', submissionData);
                 } catch (err) {
-                    console.error('Failed to log inquiry in localStorage:', err);
+                console.error('전송 중 에러 발생:', err);
                 }
 
                 // Populate success receipt elements
@@ -737,10 +737,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Helper to categorize inquiry types for CSS styling badges
         function getCategoryClass(category) {
             switch (category) {
-                case '?�용 문제': return 'use-problem';
-                case '고장 �??�리': return 'repair';
-                case '?�반 문의': return 'general';
-                case '기�?': return 'etc';
+        case '사용 문제': return 'use-problem';
+        case '고장 및 수리': return 'repair';
+        case '일반 문의': return 'general';
+        case '기타': return 'etc';
                 default: return 'default';
             }
         }
@@ -752,8 +752,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // PDF documents metadata
         const documents = {
             'web-build': {
-                fileName: '?�사?�트 구축 ?�료.pdf',
-                title: '?�사?�트 구축 ?�료',
+            fileName: '웹사이트 구축 자료.pdf',
+            title: '웹사이트 구축 자료',
                 size: '1.38 MB',
             tag: '웹 개발'
             },
@@ -845,7 +845,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (loadingEl) {
                     loadingEl.style.display = 'flex';
                     if (loadingMsgEl) {
-                        loadingMsgEl.innerHTML = `<span style="color: #ef4444; font-weight: 600;"><i class="fas fa-exclamation-triangle"></i> ?�일??불러?�는???�패?�습?�다.</span><br><span style="font-size: 0.85rem; color: rgba(255,255,255,0.5);">경로: ./${docInfo.fileName}</span>`;
+            loadingMsgEl.innerHTML = `<span style="color: #ef4444; font-weight: 600;"><i class="fas fa-exclamation-triangle"></i> 파일을 불러오는데 실패했습니다.</span><br><span style="font-size: 0.85rem; color: rgba(255,255,255,0.5);">경로: ./${docInfo.fileName}</span>`;
                     }
                 }
             });
