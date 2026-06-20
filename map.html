@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="index.css">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Leaflet.js CSS CDN -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
 </head>
 <body>
 
@@ -43,14 +42,9 @@
         <div class="container">
             
             <!-- Map and Info Layout -->
-            <div class="map-layout">
+            <div class="map-layout-centered" style="max-width: 600px; margin: 0 auto 50px;">
                 
-                <!-- Left: Interactive Leaflet Map Box -->
-                <div class="map-container-box reveal active">
-                    <div id="map"></div>
-                </div>
-
-                <!-- Right: Detailed Address Information Card -->
+                <!-- Detailed Address Information Card -->
                 <div class="map-details-card reveal active">
                     <div>
                         <h2 class="map-info-title">(주)비에이텍</h2>
@@ -90,7 +84,8 @@
                                     <strong>이메일</strong><br>
                                     cilly03@naver.com
                                 </div>
-                            </li></ul>
+                            </li>
+                        </ul>
                     </div>
 
                     <!-- Direct Navigation App Buttons -->
@@ -189,49 +184,7 @@
         </div>
     </footer>
 
-    <!-- Leaflet.js JavaScript CDN -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    
-    <!-- Map Initialization Script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Latitude and Longitude for 춘천시 퇴계공단2길 64: [37.854084, 127.742354]
-            var map = L.map('map', {
-                center: [37.854084, 127.742354],
-                zoom: 16,
-                scrollWheelZoom: false, // Prevents accidental page zooming on scroll
-                zoomControl: true
-            });
 
-            // Clean minimalist map tiles: CartoDB Voyager
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-                subdomains: 'abcd',
-                maxZoom: 20
-            }).addTo(map);
-
-            // Custom styled circle marker representing corporate color theme
-            var customIcon = L.divIcon({
-                className: 'custom-div-icon',
-                html: '<div style="background-color: #00d2ff; width: 22px; height: 22px; border-radius: 50%; border: 4px solid #000428; box-shadow: 0 0 15px rgba(0, 210, 255, 0.9);"></div>',
-                iconSize: [22, 22],
-                iconAnchor: [11, 11],
-                popupAnchor: [0, -11]
-            });
-
-            // Add marker and bind premium custom popup
-            var marker = L.marker([37.854084, 127.742354], { icon: customIcon }).addTo(map);
-            
-            var popupContent = '<h4>(주)비에이텍</h4><p>강원특별자치도 춘천시 퇴계공단2길 64<br>무맥동 정량펌프 전문 제작·수리</p>';
-            
-            marker.bindPopup(popupContent).openPopup();
-            
-            // Force redraw on window resizing for flawless responsiveness
-            window.addEventListener('resize', function() {
-                map.invalidateSize();
-            });
-        });
-    </script>
 </body>
 </html>
 
