@@ -130,6 +130,42 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
         });
+
+        // 장비 카드 내 카테고리 배지(.gallery-badge) 클릭 시 해당 카테고리 필터링 연동
+        const badges = document.querySelectorAll('.gallery-badge');
+        badges.forEach(badge => {
+            badge.style.cursor = 'pointer';
+            badge.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
+            badge.title = '이 카테고리로 필터링하려면 클릭하세요';
+
+            // 마우스 오버 시 스케일 확대 및 음영 효과
+            badge.addEventListener('mouseover', () => {
+                badge.style.transform = 'scale(1.08)';
+                badge.style.boxShadow = '0 6px 15px rgba(0,0,0,0.25)';
+            });
+            badge.addEventListener('mouseout', () => {
+                badge.style.transform = 'scale(1)';
+                badge.style.boxShadow = '0 4px 10px rgba(0,0,0,0.15)';
+            });
+
+            badge.addEventListener('click', (e) => {
+                e.stopPropagation(); // Lightbox 오작동 방지
+                const item = badge.closest('.gallery-item');
+                if (item) {
+                    let cat = '';
+                    if (item.classList.contains('facility')) cat = 'facility';
+                    else if (item.classList.contains('machinery')) cat = 'machinery';
+                    
+                    if (cat) {
+                        // 해당하는 필터 버튼 찾아서 클릭 트리거
+                        const targetBtn = document.querySelector(`.filter-btn[data-filter="${cat}"]`);
+                        if (targetBtn) {
+                            targetBtn.click();
+                        }
+                    }
+                }
+            });
+        });
     }
 
     // --- 2026 Campaign PDF Card News Slider ---
@@ -373,7 +409,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-        // 결과 없음 메시지 제어
+            // 결과 없음 메시지 제어
             if (visibleRowsCount === 0) {
                 noResultsMsg.style.display = 'block';
             } else {
@@ -382,19 +418,58 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // 게시글 맵핑 이벤트 바인딩
+        if (searchInput) {
             searchInput.addEventListener('input', (e) => {
                 searchQuery = e.target.value.toLowerCase().trim();
                 filterDeliveryTable();
             });
         }
 
-        // 카테고리 ?�터 ?�릭 ?�벤??바인??        filterBtns.forEach(btn => {
+        // 카테고리 필터 클릭 이벤트 바인딩
+        filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
 
                 activeFilter = btn.getAttribute('data-filter');
                 filterDeliveryTable();
+            });
+        });
+
+        // 테이블 내 제품 구분 열(5번째 td) 클릭 시 카테고리 필터링 적용
+        const categoryCells = document.querySelectorAll('#delivery-table tbody tr td:nth-child(5)');
+        categoryCells.forEach(cell => {
+            cell.style.cursor = 'pointer';
+            cell.style.color = 'var(--primary)';
+            cell.style.textDecoration = 'underline';
+            cell.style.fontWeight = '600';
+            cell.title = '이 카테고리로 필터링하려면 클릭하세요';
+            
+            // 호버 시 글자 색상 전환 효과
+            cell.addEventListener('mouseover', () => {
+                cell.style.color = 'var(--secondary)';
+            });
+            cell.addEventListener('mouseout', () => {
+                cell.style.color = 'var(--primary)';
+            });
+
+            cell.addEventListener('click', (e) => {
+                const row = cell.closest('tr');
+                if (row) {
+                    const cat = row.getAttribute('data-category');
+                    if (cat) {
+                        activeFilter = cat;
+                        // 상단 카테고리 필터 버튼 활성화 상태 전환
+                        filterBtns.forEach(btn => {
+                            if (btn.getAttribute('data-filter') === cat) {
+                                btn.classList.add('active');
+                            } else {
+                                btn.classList.remove('active');
+                            }
+                        });
+                        filterDeliveryTable();
+                    }
+                }
             });
         });
 
