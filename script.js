@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let slides = [];
         let isTransitioning = false;
 
-        const pdfUrl = '카드뉴스.pdf';
+        const pdfUrl = '카드?�스.pdf';
 
         // Initialize PDF.js loading
         pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
@@ -183,13 +183,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }).catch(err => {
                 console.error("Error rendering PDF pages:", err);
                 if (sliderLoading) {
-                    sliderLoading.innerHTML = `<p style="color: #ef4444; font-weight: 600; padding: 20px; text-align: center;">카드뉴스 페이지를 그리는 도중 오류가 발생했습니다.</p>`;
+                    sliderLoading.innerHTML = `<p style="color: #ef4444; font-weight: 600; padding: 20px; text-align: center;">카드?�스 ?�이지�?그리???�중 ?�류가 발생?�습?�다.</p>`;
                 }
             });
         }).catch(err => {
             console.error("Error loading PDF document:", err);
             if (sliderLoading) {
-                sliderLoading.innerHTML = `<p style="color: #ef4444; font-weight: 600; padding: 20px; text-align: center;">PDF 카드뉴스 파일을 불러올 수 없습니다. 경로 또는 상태를 확인해 주세요.</p>`;
+                sliderLoading.innerHTML = `<p style="color: #ef4444; font-weight: 600; padding: 20px; text-align: center;">PDF 카드?�스 ?�일??불러?????�습?�다. 경로 ?�는 ?�태�??�인??주세??</p>`;
             }
         });
 
@@ -313,23 +313,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- '주요사업실적' 및 '인증등록현황' 인터랙티브 제어 엔진 ---
+    // --- '주요?�업?�적' �?'?�증?�록?�황' ?�터?�티�??�어 ?�진 ---
     const recordsTabs = document.querySelector('.records-tabs');
     
     if (recordsTabs) {
         const tabButtons = document.querySelectorAll('.records-tab-btn');
         const tabPanes = document.querySelectorAll('.tab-pane');
 
-        // 1. 탭 전환 기능
+        // 1. ???�환 기능
         tabButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 const targetTab = btn.getAttribute('data-tab');
 
-                // 탭 버튼 활성화 상태 전환
+                // ??버튼 ?�성???�태 ?�환
                 tabButtons.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
 
-                // 탭 내용 활성화 상태 전환
+                // ???�용 ?�성???�태 ?�환
                 tabPanes.forEach(pane => {
                     if (pane.id === targetTab) {
                         pane.classList.add('active');
@@ -345,7 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // 2. 실적 테이블 실시간 검색 및 카테고리 필터링 엔진
+        // 2. ?�적 ?�이�??�시�?검??�?카테고리 ?�터�??�진
         const searchInput = document.getElementById('records-search');
         const filterBtns = document.querySelectorAll('.records-filter-btn');
         const tableRows = document.querySelectorAll('#delivery-table tbody tr');
@@ -373,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            // 결과 없음 메시지 제어
+            // 결과 ?�음 메시지 ?�어
             if (visibleRowsCount === 0) {
                 noResultsMsg.style.display = 'block';
             } else {
@@ -381,16 +381,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // 실시간 타이핑 이벤트 바인딩
-        if (searchInput) {
+        // ?�시�??�?�핑 ?�벤??바인??        if (searchInput) {
             searchInput.addEventListener('input', (e) => {
                 searchQuery = e.target.value.toLowerCase().trim();
                 filterDeliveryTable();
             });
         }
 
-        // 카테고리 필터 클릭 이벤트 바인딩
-        filterBtns.forEach(btn => {
+        // 카테고리 ?�터 ?�릭 ?�벤??바인??        filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
@@ -400,7 +398,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // 3. 고해상도 원본 스캔본 라이트박스 모달 엔진
+        // 3. 고해?�도 ?�본 ?�캔�??�이?�박??모달 ?�진
         const lightboxModal = document.getElementById('lightbox-modal');
         const lightboxImg = document.getElementById('lightbox-img');
         const lightboxCaption = document.getElementById('lightbox-caption');
@@ -413,51 +411,48 @@ document.addEventListener('DOMContentLoaded', () => {
                 lightboxCaption.textContent = captionText;
             }
             lightboxModal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // 뒷배경 스크롤 방지
+            document.body.style.overflow = 'hidden'; // ?�배�??�크�?방�?
         }
 
         function closeLightbox() {
             if (!lightboxModal) return;
             lightboxModal.classList.remove('active');
-            document.body.style.overflow = ''; // 뒷배경 스크롤 복원
+            document.body.style.overflow = ''; // ?�배�??�크�?복원
             setTimeout(() => {
                 if (lightboxImg) lightboxImg.src = '';
             }, 300);
         }
 
-        // '실적표 원본 스캔 보기' 버튼 바인딩
-        const btnViewScan = document.querySelector('.btn-view-scan');
+        // '?�적???�본 ?�캔 보기' 버튼 바인??        const btnViewScan = document.querySelector('.btn-view-scan');
         if (btnViewScan) {
             btnViewScan.addEventListener('click', () => {
                 const scanImg = btnViewScan.getAttribute('data-scan');
-                openLightbox(`./${scanImg}`, '지명원 - 주요사업실적 원본 스캔본');
+                openLightbox(`./${scanImg}`, '지명원 - 주요?�업?�적 ?�본 ?�캔�?);
             });
         }
 
-        // 각 인증 카드의 '원본 스캔 보기' 버튼 바인딩
-        const certZoomBtns = document.querySelectorAll('.btn-zoom-scan, .cert-image-frame');
+        // �??�증 카드??'?�본 ?�캔 보기' 버튼 바인??        const certZoomBtns = document.querySelectorAll('.btn-zoom-scan, .cert-image-frame');
         certZoomBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                // 최인접 .cert-card를 찾거나 직접 data-scan 읽기
+                // 최인??.cert-card�?찾거??직접 data-scan ?�기
                 const card = btn.closest('.cert-card');
                 const zoomBtn = card ? card.querySelector('.btn-zoom-scan') : null;
                 const scanImg = zoomBtn ? zoomBtn.getAttribute('data-scan') : btn.getAttribute('data-scan');
-                const certTitle = card ? card.querySelector('.cert-title').textContent : '인증서 원본 스캔본';
+                const certTitle = card ? card.querySelector('.cert-title').textContent : '?�증???�본 ?�캔�?;
 
                 if (scanImg) {
-                    openLightbox(`./${scanImg}`, `${certTitle} - 공식 스캔본`);
+                    openLightbox(`./${scanImg}`, `${certTitle} - 공식 ?�캔�?);
                 }
             });
         });
 
-        // 라이트박스 닫기 바인딩
-        if (lightboxClose) {
+        // ?�이?�박???�기 바인??        if (lightboxClose) {
             lightboxClose.addEventListener('click', closeLightbox);
         }
 
         if (lightboxModal) {
-            // 라이트박스 바깥 영역 클릭 시 닫기
+            // ?�이?�박??바깥 ?�역 ?�릭 ???�기
             lightboxModal.addEventListener('click', (e) => {
                 if (e.target === lightboxModal || e.target.classList.contains('lightbox-content-wrapper')) {
                     closeLightbox();
@@ -465,7 +460,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // ESC 키 입력 시 닫기
+        // ESC ???�력 ???�기
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && lightboxModal && lightboxModal.classList.contains('active')) {
                 closeLightbox();
@@ -608,20 +603,20 @@ document.addEventListener('DOMContentLoaded', () => {
             // FormSubmit API Data (Zero-setup free email sending)
             const email = emailInput.value.trim();
             const formData = {
-                _subject: `[비에이텍] 문의 접수 완료 (${categoryInput.value})`,
-                "접수 번호": ticketId,
-                "작성자 / 회사명": nameInput.value.trim(),
-                "이메일": email,
-                "문의 유형": categoryInput.value,
-                "제목": titleInput.value.trim(),
-                "내용": contentInput.value.trim(),
-                "접수 일시": now.toLocaleString('ko-KR'),
-                _replyto: email, // 이메일 답장 시 문의자에게 바로 답장 가능하도록 설정
-                _cc: email // 문의 신청자 이메일로도 사본 전송
+                _subject: `[비에?�텍] 문의 ?�수 ?�료 (${categoryInput.value})`,
+                "?�수 번호": ticketId,
+                "?�성??/ ?�사�?: nameInput.value.trim(),
+                "?�메??: email,
+                "문의 ?�형": categoryInput.value,
+                "?�목": titleInput.value.trim(),
+                "?�용": contentInput.value.trim(),
+                "?�수 ?�시": now.toLocaleString('ko-KR'),
+                _replyto: email, // ?�메???�장 ??문의?�에�?바로 ?�장 가?�하?�록 ?�정
+                _cc: email // 문의 ?�청???�메?�로???�본 ?�송
             };
 
-            // 1. Send Inquiry details via FormSubmit API to cilly03@naver.com (site owner)
-            const emailPromise = fetch("https://formsubmit.co/ajax/cilly03@naver.com", {
+            // 1. Send Inquiry details via FormSubmit API to gwf0123@hanmail.net (site owner)
+            const emailPromise = fetch("https://formsubmit.co/ajax/gwf0123@hanmail.net", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -651,18 +646,18 @@ document.addEventListener('DOMContentLoaded', () => {
             .then((results) => {
                 const emailResult = results[0];
                 if (emailResult.status === 'fulfilled' && emailResult.value.ok) {
-                    console.log('이메일 전송 성공');
+                    console.log('?�메???�송 ?�공');
                 } else {
-                    console.warn('이메일 전송 실패 (네트워크 상태 또는 FormSubmit 설정을 확인하세요)');
+                    console.warn('?�메???�송 ?�패 (?�트?�크 ?�태 ?�는 FormSubmit ?�정???�인?�세??');
                 }
                 
                 const netlifyResult = results[1];
                 if (netlifyResult.status === 'fulfilled' && netlifyResult.value.ok) {
-                    console.log('Netlify Forms 전송 완료');
+                    console.log('Netlify Forms ?�송 ?�료');
                 }
             })
             .catch(err => {
-                console.error('전송 중 에러 발생:', err);
+                console.error('?�송 �??�러 발생:', err);
             })
             .finally(() => {
                 // Store silently in localStorage (100% private, not displayed anywhere on front-end)
@@ -742,49 +737,49 @@ document.addEventListener('DOMContentLoaded', () => {
         // Helper to categorize inquiry types for CSS styling badges
         function getCategoryClass(category) {
             switch (category) {
-                case '사용 문제': return 'use-problem';
-                case '고장 및 수리': return 'repair';
-                case '일반 문의': return 'general';
-                case '기타': return 'etc';
+                case '?�용 문제': return 'use-problem';
+                case '고장 �??�리': return 'repair';
+                case '?�반 문의': return 'general';
+                case '기�?': return 'etc';
                 default: return 'default';
             }
         }
     }
 
-    // --- 내부 임직원용 PDF 아카이브 및 뷰어 제어 엔진 (internal.html 전용) ---
+    // --- ?��? ?�직?�용 PDF ?�카?�브 �?뷰어 ?�어 ?�진 (internal.html ?�용) ---
     const internalLayout = document.querySelector('.internal-doc-layout');
     if (internalLayout) {
         // PDF documents metadata
         const documents = {
             'web-build': {
-                fileName: '웹사이트 구축 자료.pdf',
-                title: '웹사이트 구축 자료',
+                fileName: '?�사?�트 구축 ?�료.pdf',
+                title: '?�사?�트 구축 ?�료',
                 size: '1.38 MB',
-                tag: '웹 개발'
+                tag: '??개발'
             },
             'prompt-guide': {
-                fileName: 'Prompt작성가이드 자료.pdf',
-                title: 'Prompt작성가이드 자료',
+                fileName: 'Prompt?�성가?�드 ?�료.pdf',
+                title: 'Prompt?�성가?�드 ?�료',
                 size: '193 KB',
-                tag: '프롬프트'
+                tag: '?�롬?�트'
             },
             'data-analysis': {
-                fileName: 'GenAI를 활용한 데이터 분석 자료.pdf',
-                title: 'GenAI를 활용한 데이터 분석 자료',
+                fileName: 'GenAI�??�용???�이??분석 ?�료.pdf',
+                title: 'GenAI�??�용???�이??분석 ?�료',
                 size: '232 KB',
-                tag: '데이터 분석'
+                tag: '?�이??분석'
             },
             'presentation-ai': {
-                fileName: '발표자료 생성 AI 자료.pdf',
-                title: '발표자료 생성 AI 자료',
+                fileName: '발표?�료 ?�성 AI ?�료.pdf',
+                title: '발표?�료 ?�성 AI ?�료',
                 size: '2.77 MB',
-                tag: '발표자료 AI'
+                tag: '발표?�료 AI'
             },
             'gems-cardnews': {
-                fileName: 'GEMS 가이드와 카드뉴스 제작 자료.pdf',
-                title: 'GEMS 가이드와 카드뉴스 제작 자료',
+                fileName: 'GEMS 가?�드?� 카드?�스 ?�작 ?�료.pdf',
+                title: 'GEMS 가?�드?� 카드?�스 ?�작 ?�료',
                 size: '444 KB',
-                tag: '카드뉴스'
+                tag: '카드?�스'
             }
         };
 
@@ -823,7 +818,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (loadingEl) {
                 loadingEl.style.display = 'flex';
                 if (loadingMsgEl) {
-                    loadingMsgEl.textContent = `"${docInfo.title}" 문서를 불러오고 있습니다...`;
+                    loadingMsgEl.textContent = `"${docInfo.title}" 문서�?불러?�고 ?�습?�다...`;
                 }
             }
 
@@ -850,7 +845,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (loadingEl) {
                     loadingEl.style.display = 'flex';
                     if (loadingMsgEl) {
-                        loadingMsgEl.innerHTML = `<span style="color: #ef4444; font-weight: 600;"><i class="fas fa-exclamation-triangle"></i> 파일을 불러오는데 실패했습니다.</span><br><span style="font-size: 0.85rem; color: rgba(255,255,255,0.5);">경로: ./${docInfo.fileName}</span>`;
+                        loadingMsgEl.innerHTML = `<span style="color: #ef4444; font-weight: 600;"><i class="fas fa-exclamation-triangle"></i> ?�일??불러?�는???�패?�습?�다.</span><br><span style="font-size: 0.85rem; color: rgba(255,255,255,0.5);">경로: ./${docInfo.fileName}</span>`;
                     }
                 }
             });
@@ -979,4 +974,5 @@ document.addEventListener('DOMContentLoaded', () => {
         loadDocument(currentDocId);
     }
 });
+
 
