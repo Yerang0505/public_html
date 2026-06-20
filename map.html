@@ -1,29 +1,30 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>찾아?�시??�?- (�?비에?�텍</title>
-    <meta name="description" content="(�?비에?�텍 춘천 공장 �?본사 ?�치�??�내???�립?�다. 춘천 ?�계공단 ???�치.">
+    <title>찾아오시는 길 - (주)비에이텍</title>
+    <meta name="description" content="(주)비에이텍 춘천 공장 및 본사 위치를 안내해 드립니다. 춘천 퇴계공단 내 위치.">
     <link rel="stylesheet" href="index.css">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <!-- Leaflet.js CSS CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 </head>
 <body>
 
     <!-- Header Navigation -->
     <nav id="navbar" class="scrolled">
         <div class="container nav-content">
-            <a href="index.html" class="logo">(�?비에?�텍<span>.</span></a>
+            <a href="index.html" class="logo">(주)비에이텍<span>.</span></a>
             <ul class="nav-links">
-                <li><a href="intro.html">기업?�개</a></li>
-                <li><a href="product.html">주요?�품</a></li>
-                <li><a href="equipment.html">?�비</a></li>
-                <li><a href="records.html">주요?�업?�적</a></li>
-                <li><a href="map.html" style="color: var(--secondary); font-weight: 700;">찾아?�시??�?/a></li>
-                <li><a href="internal.html">?��??�용</a></li>
-                <li><a href="index.html" class="btn" style="padding: 0.5rem 1.2rem; background: linear-gradient(135deg, var(--secondary), var(--primary)); color: white; border-radius: 20px;">?�으�?/a></li>
+                <li><a href="intro.html">기업소개</a></li>
+                <li><a href="product.html">주요제품</a></li>
+                <li><a href="equipment.html">장비</a></li>
+                <li><a href="records.html">주요사업실적</a></li>
+                <li><a href="map.html" style="color: var(--secondary); font-weight: 700;">찾아오시는 길</a></li>
+                <li><a href="internal.html">내부인용</a></li>
+                <li><a href="index.html" class="btn" style="padding: 0.5rem 1.2rem; background: linear-gradient(135deg, var(--secondary), var(--primary)); color: white; border-radius: 20px;">홈으로</a></li>
             </ul>
         </div>
     </nav>
@@ -32,8 +33,8 @@
     <section class="sub-hero">
         <div class="sub-hero-overlay"></div>
         <div class="container sub-hero-content">
-            <h1 class="reveal active">찾아?�시??�?/h1>
-            <p class="reveal active">?��? ?�량 ?�프 기술???�두주자, (�?비에?�텍?�로 ?�시??길을 ?�세???�내???�립?�다.</p>
+            <h1 class="reveal active">찾아오시는 길</h1>
+            <p class="reveal active">정밀 정량 펌프 기술의 선두주자, (주)비에이텍으로 오시는 길을 상세히 안내해 드립니다.</p>
         </div>
     </section>
 
@@ -42,57 +43,63 @@
         <div class="container">
             
             <!-- Map and Info Layout -->
-            <div class="map-layout-centered" style="max-width: 600px; margin: 0 auto 50px;">
+            <div class="map-layout">
                 
-                <!-- Detailed Address Information Card -->
+                <!-- Left: Interactive Leaflet Map Box -->
+                <div class="map-container-box reveal active">
+                    <div id="map"></div>
+                </div>
+
+                <!-- Right: Detailed Address Information Card -->
                 <div class="map-details-card reveal active">
                     <div>
-                        <h2 class="map-info-title">(�?비에?�텍</h2>
+                        <h2 class="map-info-title">(주)비에이텍</h2>
                         <ul class="map-info-list">
                             <li>
                                 <i class="fas fa-user"></i>
                                 <div>
-                                    <strong>?�?�이??/strong><br>
-                                    조세??                                </div>
+                                    <strong>대표이사</strong><br>
+                                    조세연
+                                </div>
                             </li>
                             <li>
                                 <i class="fas fa-map-marker-alt"></i>
                                 <div>
                                     <strong>주소</strong><br>
-                                    강원?�별?�치??춘천???�계공단2�?64<br>
-                                    (?�계?�공?��? ??
+                                    강원특별자치도 춘천시 퇴계공단2길 64<br>
+                                    (퇴계농공단지 내)
                                 </div>
                             </li>
                             <li>
                                 <i class="fas fa-phone"></i>
                                 <div>
-                                    <strong>?�화번호</strong><br>
+                                    <strong>전화번호</strong><br>
                                     033-264-9243
                                 </div>
                             </li>
                             <li>
                                 <i class="fas fa-fax"></i>
                                 <div>
-                                    <strong>?�스번호</strong><br>
+                                    <strong>팩스번호</strong><br>
                                     033-251-5747
                                 </div>
                             </li>
                             <li>
                                 <i class="fas fa-envelope"></i>
                                 <div>
-                                    <strong>?�메??/strong><br>
+                                    <strong>이메일</strong><br>
                                     cilly03@naver.com
                                 </div>
-                            </li>
-                        </ul>
+                            </li></ul>
                     </div>
 
                     <!-- Direct Navigation App Buttons -->
                     <div class="map-action-group">
                         <a href="https://naver.me/5zUXvb8G" target="_blank" class="btn-map-app btn-naver">
-                            <i class="fas fa-map-marked-alt"></i> ?�이�?지??                        </a>
-                        <a href="https://map.kakao.com/?q=강원?�별?�치??춘천???�계공단2�?64" target="_blank" class="btn-map-app btn-kakao">
-                            <i class="fas fa-location-arrow"></i> 카카?�맵
+                            <i class="fas fa-map-marked-alt"></i> 네이버 지도
+                        </a>
+                        <a href="https://map.kakao.com/?q=강원특별자치도 춘천시 퇴계공단2길 64" target="_blank" class="btn-map-app btn-kakao">
+                            <i class="fas fa-location-arrow"></i> 카카오맵
                         </a>
                     </div>
                 </div>
@@ -107,32 +114,32 @@
                 
                 <!-- Public Transit Card -->
                 <div class="guide-card">
-                    <h3><i class="fas fa-bus"></i> ?�중교???�용 ??/h3>
+                    <h3><i class="fas fa-bus"></i> 대중교통 이용 시</h3>
                     <ul class="guide-steps">
                         <li>
-                            <strong>춘천??출발:</strong> 춘천??건너??버스?�류?�에??<strong>200�?/ 9�?버스</strong> ?�승 ?? <strong>'?�계?�공?��? ?�구'</strong> ?�류?�에???�차?�여 ?�보 ??5�??�요?�니??
+                            <strong>춘천역 출발:</strong> 춘천역 건너편 버스정류장에서 <strong>200번 / 9번 버스</strong> 탑승 후, <strong>'퇴계농공단지 입구'</strong> 정류장에서 하차하여 도보 약 5분 소요됩니다.
                         </li>
                         <li>
-                            <strong>?�춘천역 출발:</strong> ?�춘천역 ?�승?�류?�에??<strong>100�?/ 15�?버스</strong> ?�승 ?? <strong>'?�계공단?�거�?</strong> ?�류?�에???�차?�여 ?�보 ??8�??�요?�니??
+                            <strong>남춘천역 출발:</strong> 남춘천역 환승정류장에서 <strong>100번 / 15번 버스</strong> 탑승 후, <strong>'퇴계공단사거리'</strong> 정류장에서 하차하여 도보 약 8분 소요됩니다.
                         </li>
                         <li>
-                            <strong>ITX-�?�� ?�용 ??</strong> ?�춘천역?�서 ?�차?�여 ?�시�??�용?�실 경우 ??10분이 ?�요?�니?? (기본?�금 ?��?)
+                            <strong>ITX-청춘 이용 시:</strong> 남춘천역에서 하차하여 택시를 이용하실 경우 약 10분이 소요됩니다. (기본요금 수준)
                         </li>
                     </ul>
                 </div>
 
                 <!-- Driving Directions Card -->
                 <div class="guide-card">
-                    <h3><i class="fas fa-car"></i> ?��????�용 ??/h3>
+                    <h3><i class="fas fa-car"></i> 자가용 이용 시</h3>
                     <ul class="guide-steps">
                         <li>
-                            <strong>중앙고속?�로 ?�용 ??</strong> <strong>춘천 IC</strong> 진출 ??춘천?�환�?방면?�로 ?�회?? ?�계�??�거리에???�계공단 방면?�로 ?�측 진입?�시�??�니??
+                            <strong>중앙고속도로 이용 시:</strong> <strong>춘천 IC</strong> 진출 후 춘천순환로 방면으로 우회전, 퇴계로 사거리에서 퇴계공단 방면으로 우측 진입하시면 됩니다.
                         </li>
                         <li>
-                            <strong>?�울-춘천고속?�로 ?�용 ??</strong> <strong>?�춘�?IC</strong> 진출 ??김?�정로�? ?�라 ??15km 직진, ?�계?�공?��? 교차로에???�정?��? ?�인?�신 ??좌회?�하??진입?�십?�오.
+                            <strong>서울-춘천고속도로 이용 시:</strong> <strong>남춘천 IC</strong> 진출 후 김유정로를 따라 약 15km 직진, 퇴계농공단지 교차로에서 이정표를 확인하신 후 좌회전하여 진입하십시오.
                         </li>
                         <li>
-                            <strong>?�비게이???�정:</strong> 차량 ?�비게이???�는 ?�마?�폰 ?�비 ?�에??<strong>'비에?�텍'</strong> ?�는 <strong>'춘천???�계공단2�?64'</strong>�?검?�하?�면 ?�확??공장 ?�문?�로 ?�내?�니??
+                            <strong>네비게이션 설정:</strong> 차량 네비게이션 또는 스마트폰 내비 앱에서 <strong>'비에이텍'</strong> 또는 <strong>'춘천시 퇴계공단2길 64'</strong>를 검색하시면 정확한 공장 정문으로 안내됩니다.
                         </li>
                     </ul>
                 </div>
@@ -147,44 +154,83 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <h3 class="logo">(�?비에?�텍<span>.</span></h3>
-                    <p style="margin-bottom: 25px; color: #94a3b8;">?�터?�프 ?�작, ?�치, ?�리 분야??br>?�뢰받는 ?�트?��? ?�겠?�니??</p>
+                    <h3 class="logo">(주)비에이텍<span>.</span></h3>
+                    <p style="margin-bottom: 25px; color: #94a3b8;">워터펌프 제작, 설치, 수리 분야의<br>신뢰받는 파트너가 되겠습니다.</p>
                     <div class="footer-info">
-                        <p><i class="fas fa-user"></i> ?�?�이?? 조세??/p>
-                        <p><i class="fas fa-map-marker-alt"></i> 강원?�별?�치??춘천???�계공단2�?64</p>
+                        <p><i class="fas fa-user"></i> 대표이사: 조세연</p>
+                        <p><i class="fas fa-map-marker-alt"></i> 강원특별자치도 춘천시 퇴계공단2길 64</p>
                         <p><i class="fas fa-phone"></i> 033-264-9243</p>
                         <p><i class="fas fa-fax"></i> 033-251-5747</p>
                         <p><i class="fas fa-envelope"></i> cilly03@naver.com</p>
                     </div>
                 </div>
                 <div class="footer-links">
-                    <h4>바로가�?/h4>
+                    <h4>바로가기</h4>
                     <ul>
-                        <li><a href="intro.html">기업?�개</a></li>
-                        <li><a href="product.html">주요?�품</a></li>
-                        <li><a href="equipment.html">?�비?�황</a></li>
-                        <li><a href="records.html">주요?�업?�적</a></li>
+                        <li><a href="intro.html">기업소개</a></li>
+                        <li><a href="product.html">주요제품</a></li>
+                        <li><a href="equipment.html">장비현황</a></li>
+                        <li><a href="records.html">주요사업실적</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
-                    <h4>고객지??/h4>
+                    <h4>고객지원</h4>
                     <ul>
-                        <li><a href="map.html">찾아?�시??�?/a></li>
-                        <li><a href="inquiry.html">?�라??문의</a></li>
-                        <li><a href="equipment.html">?��?보수 지침서</a></li>
-                        <li><a href="inquiry.html">A/S ?�수</a></li>
+                        <li><a href="map.html">찾아오시는 길</a></li>
+                        <li><a href="inquiry.html">온라인 문의</a></li>
+                        <li><a href="equipment.html">유지보수 지침서</a></li>
+                        <li><a href="inquiry.html">A/S 접수</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 (�?비에?�텍. All rights reserved.</p>
+                <p>&copy; 2026 (주)비에이텍. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Leaflet.js JavaScript CDN -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <!-- Map Initialization Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Latitude and Longitude for 춘천시 퇴계공단2길 64: [37.8488, 127.7265]
+            var map = L.map('map', {
+                center: [37.8488, 127.7265],
+                zoom: 16,
+                scrollWheelZoom: false, // Prevents accidental page zooming on scroll
+                zoomControl: true
+            });
 
+            // Clean minimalist map tiles: CartoDB Voyager
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                subdomains: 'abcd',
+                maxZoom: 20
+            }).addTo(map);
+
+            // Custom styled circle marker representing corporate color theme
+            var customIcon = L.divIcon({
+                className: 'custom-div-icon',
+                html: '<div style="background-color: #00d2ff; width: 22px; height: 22px; border-radius: 50%; border: 4px solid #000428; box-shadow: 0 0 15px rgba(0, 210, 255, 0.9);"></div>',
+                iconSize: [22, 22],
+                iconAnchor: [11, 11],
+                popupAnchor: [0, -11]
+            });
+
+            // Add marker and bind premium custom popup
+            var marker = L.marker([37.8488, 127.7265], { icon: customIcon }).addTo(map);
+            
+            var popupContent = '<h4>(주)비에이텍</h4><p>강원특별자치도 춘천시 퇴계공단2길 64<br>무맥동 정량펌프 전문 제작·수리</p>';
+            
+            marker.bindPopup(popupContent).openPopup();
+            
+            // Force redraw on window resizing for flawless responsiveness
+            window.addEventListener('resize', function() {
+                map.invalidateSize();
+            });
+        });
+    </script>
 </body>
 </html>
-
-
-

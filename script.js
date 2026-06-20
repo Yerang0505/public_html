@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.getElementById('navbar');
     const revealElements = document.querySelectorAll('.reveal');
 
@@ -145,7 +145,7 @@
         let slides = [];
         let isTransitioning = false;
 
-        const pdfUrl = '카드?�스.pdf';
+        const pdfUrl = '카드뉴스.pdf';
 
         // Initialize PDF.js loading
         pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
@@ -183,13 +183,13 @@
             }).catch(err => {
                 console.error("Error rendering PDF pages:", err);
                 if (sliderLoading) {
-                    sliderLoading.innerHTML = `<p style="color: #ef4444; font-weight: 600; padding: 20px; text-align: center;">카드?�스 ?�이지�?그리???�중 ?�류가 발생?�습?�다.</p>`;
+                    sliderLoading.innerHTML = `<p style="color: #ef4444; font-weight: 600; padding: 20px; text-align: center;">카드뉴스 페이지를 그리는 도중 오류가 발생했습니다.</p>`;
                 }
             });
         }).catch(err => {
             console.error("Error loading PDF document:", err);
             if (sliderLoading) {
-                sliderLoading.innerHTML = `<p style="color: #ef4444; font-weight: 600; padding: 20px; text-align: center;">PDF 카드?�스 ?�일??불러?????�습?�다. 경로 ?�는 ?�태�??�인??주세??</p>`;
+                    sliderLoading.innerHTML = `<p style="color: #ef4444; font-weight: 600; padding: 20px; text-align: center;">PDF 카드뉴스 파일을 불러올 수 없습니다. 경로 또는 상태를 확인해 주세요.</p>`;
             }
         });
 
@@ -373,7 +373,7 @@
                 }
             });
 
-            // 결과 ?�음 메시지 ?�어
+        // 결과 없음 메시지 제어
             if (visibleRowsCount === 0) {
                 noResultsMsg.style.display = 'block';
             } else {
@@ -381,7 +381,7 @@
             }
         }
 
-        // ?�시�??�?�핑 ?�벤??바인??        if (searchInput) {
+        // 게시글 맵핑 이벤트 바인딩
             searchInput.addEventListener('input', (e) => {
                 searchQuery = e.target.value.toLowerCase().trim();
                 filterDeliveryTable();
@@ -427,7 +427,7 @@
         if (btnViewScan) {
             btnViewScan.addEventListener('click', () => {
                 const scanImg = btnViewScan.getAttribute('data-scan');
-                openLightbox(`./${scanImg}`, '지명원 - 주요?�업?�적 ?�본 ?�캔�?);
+        openLightbox(`./${scanImg}`, '지명원 - 주요사업실적 원본 스캔본');
             });
         }
 
@@ -435,14 +435,14 @@
         certZoomBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                // 최인??.cert-card�?찾거??직접 data-scan ?�기
+        // 가장 가까운 .cert-card를 찾거나 직접 data-scan 읽기
                 const card = btn.closest('.cert-card');
                 const zoomBtn = card ? card.querySelector('.btn-zoom-scan') : null;
                 const scanImg = zoomBtn ? zoomBtn.getAttribute('data-scan') : btn.getAttribute('data-scan');
-                const certTitle = card ? card.querySelector('.cert-title').textContent : '?�증???�본 ?�캔�?;
+        const certTitle = card ? card.querySelector('.cert-title').textContent : '인증서 원본 스캔본';
 
                 if (scanImg) {
-                    openLightbox(`./${scanImg}`, `${certTitle} - 공식 ?�캔�?);
+        openLightbox(`./${scanImg}`, `${certTitle} - 공식 스캔본`);
                 }
             });
         });
@@ -603,7 +603,7 @@
             // FormSubmit API Data (Zero-setup free email sending)
             const email = emailInput.value.trim();
             const formData = {
-                _subject: `[비에?�텍] 문의 ?�수 ?�료 (${categoryInput.value})`,
+                _subject: `[비에이텍] 문의 접수 완료 (${categoryInput.value})`,
                 "?�수 번호": ticketId,
                 "?�성??/ ?�사�?: nameInput.value.trim(),
                 "?�메??: email,
@@ -755,29 +755,29 @@
                 fileName: '?�사?�트 구축 ?�료.pdf',
                 title: '?�사?�트 구축 ?�료',
                 size: '1.38 MB',
-                tag: '??개발'
+            tag: '웹 개발'
             },
             'prompt-guide': {
-                fileName: 'Prompt?�성가?�드 ?�료.pdf',
-                title: 'Prompt?�성가?�드 ?�료',
+            fileName: 'Prompt작성가이드 자료.pdf',
+            title: 'Prompt작성가이드 자료',
                 size: '193 KB',
                 tag: '?�롬?�트'
             },
             'data-analysis': {
-                fileName: 'GenAI�??�용???�이??분석 ?�료.pdf',
-                title: 'GenAI�??�용???�이??분석 ?�료',
+            fileName: 'GenAI를 활용한 데이터 분석 자료.pdf',
+            title: 'GenAI를 활용한 데이터 분석 자료',
                 size: '232 KB',
                 tag: '?�이??분석'
             },
             'presentation-ai': {
-                fileName: '발표?�료 ?�성 AI ?�료.pdf',
-                title: '발표?�료 ?�성 AI ?�료',
+            fileName: '발표자료 생성 AI 자료.pdf',
+            title: '발표자료 생성 AI 자료',
                 size: '2.77 MB',
                 tag: '발표?�료 AI'
             },
             'gems-cardnews': {
-                fileName: 'GEMS 가?�드?� 카드?�스 ?�작 ?�료.pdf',
-                title: 'GEMS 가?�드?� 카드?�스 ?�작 ?�료',
+            fileName: 'GEMS 가이드와 카드뉴스 제작 자료.pdf',
+            title: 'GEMS 가이드와 카드뉴스 제작 자료',
                 size: '444 KB',
                 tag: '카드?�스'
             }
@@ -818,7 +818,7 @@
             if (loadingEl) {
                 loadingEl.style.display = 'flex';
                 if (loadingMsgEl) {
-                    loadingMsgEl.textContent = `"${docInfo.title}" 문서�?불러?�고 ?�습?�다...`;
+            loadingMsgEl.textContent = `"${docInfo.title}" 문서를 불러오고 있습니다...`;
                 }
             }
 
